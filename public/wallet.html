@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OLU-XMD | My Wallet</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <main class="main">
+        <header class="header">
+            <h1>My Wallet</h1>
+            <a href="index.html">Dashboard</a>
+        </header>
+
+        <section class="deploy">
+            <h2>Wallet Balance</h2>
+            <h1 id="balance">Loading...</h1>
+
+            <p id="accountName">Loading account...</p>
+
+          <label for="fundAmount">Amount to fund (₦)</label>
+
+<input
+    type="number"
+    id="fundAmount"
+    placeholder="Enter amount"
+    min="100"
+>
+
+<button type="button" id="fundButton">
+    Continue to Payment
+</button>
+
+<p id="fundMessage">
+    Paystack payment will be connected soon.
+</p>
+
+            <p>Payment gateway will be connected later.</p>
+        </section>
+
+        <section class="deploy">
+            <h2>Transaction History</h2>
+
+            <div id="transactions">
+                Loading transactions...
+            </div>
+        </section>
+    </main>
+
+    <script>
+        async function loadWallet() {
+            try {
+                const response = await fetch("/api/wallet");
+                const result = await response.json();
+
+                if (!response.ok) {
+                    window.location.href = "login.html";
+                    return;
+                }
+
+                document.getElementById("balance").textContent =
+                    "₦" + (result.balance / 100).toFixed(2);
+
+                document.getElementById("accountName").textContent =
+                    "Welcome, " + result.name;
+
+                const container = document.getElementById("transactions");
+
+                if (result.transactions.length === 0) {
+                    container.textContent = "No transactions yet.";
+                } else {
+                    container.innerHTML = "";
+
+                  result.transactions.forEach(transaction => {
+    const item = document.createElement("p");
+    const status = transaction.status.toLowerCase();
+
+    item.textContent =
+        transaction.type + " — ₦" +
+        (transaction.amount / 100).toFixed(2) +
+        " — " + status.toUpperCase() +
+        " — " + new Date(transaction.created_at + " UTC").toLocaleString();
+
+    item.classList.add("status-" + status);
+
+    container.appendChild(item);
+}); 
+                }
+
+            } catch (error) {
+                document.getElementById("balance").textContent =
+                    "Unable to load wallet.";
+            }
+        }
+document.getElementById("fundButton").addEventListener("click", async function() {
+    const amount = Number(document.getElementById("fundAmount").value);
+    const message = document.getElementById("fundMessage");
+
+    if (!Number.isSafeInteger(amount) || amount < 100 || amount > 1000000) {
+        message.textContent = "Enter a whole amount between ₦100 and ₦1,000,000.";
+        return;
+    }
+
+    message.textContent = "Creating funding request...";
+
+    try {
+        const response = await fetch("/api/wallet/fund", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ amount })
+        });
+
+        const result = await response.json();
+
+        if (!response.ok) {
+            message.textContent = result.message;
+            return;
+        }
+
+        message.textContent =
+            "Funding request created. Reference: " + result.reference +
+            ". Payment is not completed yet.";
+
+        loadWallet();
+
+    } catch (error) {
+        message.textContent = "Unable to contact the server.";
+    }
+});
+        loadWallet();
+    </script>
+
+</body>
+</html>

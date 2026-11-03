@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OLU-XMD | Connect WhatsApp</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <main class="main">
+        <header class="header">
+            <h1>Connect WhatsApp</h1>
+            <a href="index.html">Dashboard</a>
+        </header>
+
+        <section class="deploy">
+            <h2>Connect Your WhatsApp Account</h2>
+
+            <p>Enter your WhatsApp number to request a pairing code.</p>
+
+            <label for="phoneNumber">WhatsApp Phone Number</label>
+
+            <input
+                type="tel"
+                id="phoneNumber"
+                placeholder="2349010215113"
+            >
+
+            <button type="button" id="connectButton">
+                Generate Pairing Code
+            </button>
+            <button type="button" id="reconnectButton">
+    Reconnect Saved WhatsApp
+</button>
+
+            <p id="connectionMessage">
+                Your connection status will appear here.
+            </p>
+
+            <h3 id="pairingCode"></h3>
+        </section>
+    </main>
+<script>
+const connectButton = document.getElementById("connectButton");
+const reconnectButton = document.getElementById("reconnectButton");
+
+let isConnecting = false;
+
+connectButton.addEventListener("click", async () => {
+    if (isConnecting) return;
+
+    isConnecting = true;
+    connectButton.disabled = true;
+
+    const phoneNumber = document.getElementById("phoneNumber").value.trim();
+    const message = document.getElementById("connectionMessage");
+    const codeDisplay = document.getElementById("pairingCode");
+
+    message.textContent = "Requesting pairing code...";
+    codeDisplay.textContent = "";
+
+    try {
+        const response = await fetch("/api/whatsapp/pair", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ phoneNumber })
+        });
+
+        const result = await response.json();
+
+        if (!response.ok) {
+            throw new Error(result.message || "Unable to connect.");
+        }
+
+        message.textContent = "Pairing code generated. Enter it in WhatsApp.";
+        codeDisplay.textContent = result.pairingCode || "";
+
+    } catch (error) {
+        message.textContent = error.message;
+
+    } finally {
+        isConnecting = false;
+        connectButton.disabled = false;
+    }
+});
+
+reconnectButton.addEventListener("click", async () => {
+    reconnectButton.disabled = true;
+
+    const message = document.getElementById("connectionMessage");
+    const codeDisplay = document.getElementById("pairingCode");
+
+    message.textContent = "Reconnecting to saved WhatsApp session...";
+    codeDisplay.textContent = "";
+
+    try {
+        const response = await fetch("/api/whatsapp/reconnect", {
+            method: "POST"
+        });
+
+        const result = await response.json();
+
+        if (!response.ok) {
+            throw new Error(result.message || "Reconnection failed.");
+        }
+
+        message.textContent = result.message;
+
+    } catch (error) {
+        message.textContent = error.message;
+
+    } finally {
+        reconnectButton.disabled = false;
+    }
+});
+</script>
+</body>
+</html>

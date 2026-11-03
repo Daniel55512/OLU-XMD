@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OLU-XMD Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<script src="script.js"></script>
+
+<body>
+
+    <aside class="sidebar">
+        <div class="logo">OLU<span>-XMD</span></div>
+
+        <a href="#" class="active">Dashboard</a>
+        <a href="bot.html">My Bot</a>
+        <a href="connect.html">Connect WhatsApp</a>
+        <a href="#">Deployments</a>
+        <a href="#">Commands</a>
+        <a href="#">Settings</a>
+    </aside>
+
+    <main class="main">
+        <header class="header">
+            <h1>Dashboard</h1>
+            <div class="status">● System Ready</div>
+        </header>
+
+       <section class="cards">
+
+    <div class="card">
+        <h3>Bot Status</h3>
+        <p>Offline</p>
+    </div>
+
+    <div class="card">
+        <h3>Total Deployments</h3>
+        <p>0</p>
+    </div>
+
+    <div class="card">
+        <h3>Bot Commands</h3>
+        <p>0</p>
+    </div>
+
+    <div class="card">
+        <h3>Wallet Balance</h3>
+        <p id="dashboardBalance">Loading...</p>
+        <h3>Recent Transactions</h3>
+<div id="recentTransactions">
+    Loading transactions...
+</div>
+        <a href="wallet.html">View Wallet</a>
+    </div>
+
+</section>
+
+        <section class="deploy">
+            <h2>OLU-XMD Bot Management</h2>
+            <p>Welcome to your private WhatsApp bot deployment panel.</p>
+            <button type="button">Deploy Bot</button>
+        </section>
+    </main>
+
+</body>
+</html>

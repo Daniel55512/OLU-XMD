@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | OLU-XMD</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <main class="main">
+        <section class="deploy">
+            <h2>Welcome Back</h2>
+            <p>Login to your OLU-XMD account.</p>
+
+            <form id="loginForm">
+                <label>Email Address</label>
+                <input type="email" id="email" required>
+
+                <br><br>
+
+                <label>Password</label>
+                <input type="password" id="password" required>
+
+                <br><br>
+
+                <button type="submit">Login</button>
+            </form>
+
+            <p id="message"></p>
+        </section>
+    </main>
+
+    <script>
+        document.getElementById("loginForm").addEventListener("submit", async function(event) {
+            event.preventDefault();
+
+            const message = document.getElementById("message");
+            message.textContent = "Logging in...";
+
+            try {
+                const response = await fetch("/api/login", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        email: document.getElementById("email").value,
+                        password: document.getElementById("password").value
+                    })
+                });
+
+                const result = await response.json();
+                message.textContent = result.message;
+
+                if (result.success) {
+                    window.location.href = "index.html";
+                }
+
+            } catch (error) {
+                message.textContent = "Unable to connect to the server.";
+            }
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,20 @@
+{
+  "name": "olu-xmd-panel",
+  "version": "1.0.0",
+  "description": "OLU-XMD Bot Deployment Panel",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "@whiskeysockets/baileys": "^7.0.0-rc14",
+    "bcryptjs": "^3.0.3",
+    "better-sqlite3": "^13.0.3",
+    "express": "^5.1.0",
+    "express-session": "^1.19.0",
+    "qrcode": "^1.5.4"
+  },
+  "allowScripts": {
+    "@whiskeysockets/baileys@6.7.24": true
+  }
+}

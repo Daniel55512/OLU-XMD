@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OLU-XMD | My Bot</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <aside class="sidebar">
+        <div class="logo">OLU<span>-XMD</span></div>
+        <a href="index.html">Dashboard</a>
+        <a href="bot.html" class="active">My Bot</a>
+        <a href="#">Deployments</a>
+        <a href="#">Commands</a>
+        <a href="#">Settings</a>
+    </aside>
+
+    <main class="main">
+
+        <header class="header">
+            <div>
+                <h1>My WhatsApp Bot</h1>
+                <p>Manage your WhatsApp automation.</p>
+            </div>
+
+            <div class="status">● Disconnected</div>
+        </header>
+
+        <section class="bot-overview">
+
+            <div class="bot-card">
+                <h3>BOT STATUS</h3>
+                <strong>Disconnected</strong>
+            </div>
+
+            <div class="bot-card">
+                <h3>CONNECTED NUMBER</h3>
+                <strong>Not connected</strong>
+            </div>
+
+            <div class="bot-card">
+                <h3>SUBSCRIPTION</h3>
+                <strong>Not started</strong>
+            </div>
+
+        </section>
+
+        <section class="bot-connect">
+
+            <h2>Connect Your WhatsApp</h2>
+
+            <p>
+                Link your WhatsApp account using your phone number
+                and a secure pairing code.
+            </p>
+
+            <label for="phone">WhatsApp phone number</label>
+
+            <input
+                type="tel"
+                id="phone"
+                placeholder="234XXXXXXXXXX"
+            >
+
+            <button type="button" disabled>
+                Generate Pairing Code
+            </button>
+
+            <div class="bot-notice">
+                <p>
+                    <strong>Coming soon:</strong>
+                    WhatsApp pairing will be available when
+                    the connection engine is ready.
+                </p>
+            </div>
+
+        </section>
+
+    </main>
+
+</body>
+</html>
