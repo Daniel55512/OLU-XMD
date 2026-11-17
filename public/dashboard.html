@@ -1,0 +1,158 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OLU-XMD Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="dashboard.css">
+</head>
+
+
+<body class="dashboard-page">
+
+    <aside class="sidebar">
+    <div class="logo">OLU<span>-XMD</span></div>
+
+    <a href="#" class="active">Dashboard</a>
+    <a href="bot.html">My Bot</a>
+    <a href="auto-reply.html">Auto Reply</a>
+    <a href="custom-commands.html">Custom Commands</a>
+    <a href="#" id="ownerPanelLink" style="display: none;">Owner Panel</a>
+    <a href="subscription.html">My Subscription</a>
+    <a href="connect.html">Connect WhatsApp</a>
+    <a href="#">Deployments</a>
+    <a href="#">Commands</a>
+    <a href="#">Settings</a>
+</aside>
+
+<button
+    type="button"
+    id="desktopSidebarToggle"
+    class="desktop-sidebar-toggle"
+    aria-label="Hide navigation"
+    aria-expanded="true"
+    title="Hide sidebar"
+>
+    &lt;
+</button>
+
+<main class="main">
+    <header class="header">
+        <div class="profile-area">
+                <details class="profile-menu">
+    <summary class="profile-trigger" aria-label="Open account menu">
+        <img class="profile-avatar" src="/images/olu-xmd-logo.png" alt="OLU-XMD logo">
+    </summary>
+
+    <div class="profile-dropdown">
+        <p class="profile-dropdown-heading">MY ACCOUNT</p>
+
+        <div class="profile-identity">
+            <strong id="accountProfileName">Loading account...</strong>
+            <span id="accountProfileEmail">Loading email...</span>
+        </div>
+
+        <div class="profile-dropdown-links">
+            <a href="wallet.html">My Wallet</a>
+            <a href="subscription.html">My Subscription</a>
+            <a href="connect.html">Connect WhatsApp</a>
+        </div>
+
+        <a href="login.html" id="loginButton" style="display: none;">Login</a>
+        <a href="#" id="logoutButton" style="display: none;">Logout</a>
+    </div>
+</details>
+                <p id="welcomeMessage">Welcome back!</p>
+            </div>
+            <div class="status" id="systemStatus">Checking...</div>
+        </header>
+
+        <section class="cards">
+            <div class="card">
+                <h3>Bot Status</h3>
+                <p id="botStatus">Checking...</p>
+            </div>
+        </section>
+
+        <section class="deploy" id="whatsappOnboarding">
+            <h2>Connect Your WhatsApp</h2>
+            <p>Link your WhatsApp account to start using OLU-XMD.</p>
+            <p><strong>WhatsApp linking is completely FREE.</strong> No subscription or wallet funding is required.</p>
+
+            <div id="dashboardConnectionForm">
+                <label for="dashboardPhoneNumber">WhatsApp Phone Number (with country code)</label>
+                <input
+                    type="tel"
+                    id="dashboardPhoneNumber"
+                    placeholder="2349010215113"
+                    autocomplete="tel"
+                >
+
+                <button type="button" id="dashboardPairButton">
+                    Generate Pairing Code
+                </button>
+
+                <button type="button" id="dashboardReconnectButton">
+                    Reconnect Saved WhatsApp
+                </button>
+            </div>
+
+            <p id="dashboardConnectionMessage" role="status" aria-live="polite">
+                Checking your WhatsApp connection...
+            </p>
+
+            <h3 id="dashboardPairingCode" aria-live="polite"></h3>
+
+            <hr>
+
+            <p>Connection Status: <strong id="dashboardConnectionStatus">Checking...</strong></p>
+            <p>Linked WhatsApp Number: <strong id="connectedNumber">Checking...</strong></p>
+
+            <p>
+                <a href="connect.html">Open WhatsApp Device Manager</a>
+            </p>
+        </section>
+
+        <section class="cards">
+            <div class="card">
+                <h3>Total Deployments</h3>
+                <p>0</p>
+            </div>
+
+            <div class="card">
+                <h3>Bot Commands</h3>
+                <p>0</p>
+            </div>
+
+            <div class="card">
+                <h3>Wallet Balance</h3>
+                <p id="dashboardBalance">Loading...</p>
+                <h3>Recent Transactions</h3>
+                <div id="recentTransactions">
+                    Loading transactions...
+                </div>
+                <a href="wallet.html">View Wallet</a>
+            </div>
+            <!-- OLU-XMD DASHBOARD XMD COIN CARD -->
+            <div class="card xmd-coin-card">
+                <h3>XMD Coin Balance</h3>
+                <p id="dashboardXmdCoinBalance">Loading...</p>
+                <div id="dashboardXmdCoinDetails" class="xmd-coin-meta">
+                    Loading account details...
+                </div>
+                <a href="wallet.html">View XMD Coin Wallet</a>
+            </div>
+        </section>
+
+    </main>
+<script src="script.js"></script>
+
+
+</body>
+</html>
+
+
+
+
+

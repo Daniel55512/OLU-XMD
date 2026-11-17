@@ -1,0 +1,194 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OLU-XMD | Custom Commands</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .command-card {
+            background: white;
+            padding: 25px;
+            border-radius: 16px;
+            margin-bottom: 22px;
+            border: 1px solid var(--border);
+        }
+        .command-card h2 {
+            margin-bottom: 8px;
+            color: var(--navy);
+        }
+        .command-description {
+            color: var(--muted);
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+        .command-label {
+            display: block;
+            font-weight: 700;
+            margin: 15px 0 7px;
+        }
+        .command-input {
+            width: 100%;
+            padding: 13px;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            font-family: inherit;
+            font-size: 14px;
+            outline: none;
+        }
+        .command-input:focus {
+            border-color: var(--blue);
+        }
+        textarea.command-input {
+            min-height: 120px;
+            resize: vertical;
+        }
+        .command-button {
+            background: var(--navy);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 9px;
+            font-weight: 700;
+            margin-top: 15px;
+            cursor: pointer;
+        }
+        .command-button:hover {
+            background: var(--blue);
+        }
+        .saved-command {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            padding: 14px;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            margin-top: 12px;
+        }
+        .saved-command strong {
+            color: var(--navy);
+        }
+        .saved-command p {
+            font-size: 13px;
+            color: var(--muted);
+            white-space: pre-wrap;
+            overflow-wrap: anywhere;
+        }
+        .command-actions {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .edit-command {
+            background: #DBEAFE;
+            color: #1D4ED8;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+        .delete-command {
+            background: #FEE2E2;
+            color: #B91C1C;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+        .premium-lock {
+            background: #FFF7ED;
+            border: 1px solid #FED7AA;
+            color: #9A3412;
+            padding: 18px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+        .command-notice {
+            font-size: 13px;
+            color: var(--muted);
+            margin-top: 12px;
+        }
+        @media(max-width: 700px) {
+            .saved-command {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<aside class="sidebar">
+    <div class="logo">OLU<span>-XMD</span></div>
+    <a href="/dashboard.html">Dashboard</a>
+    <a href="bot.html">My Bot</a>
+    <a href="auto-reply.html">Auto Reply</a>
+    <a href="custom-commands.html" class="active">Custom Commands</a>
+    <a href="subscription.html">My Subscription</a>
+    <a href="#">Deployments</a>
+    <a href="#">Settings</a>
+</aside>
+
+<button
+    type="button"
+    id="desktopSidebarToggle"
+    class="desktop-sidebar-toggle"
+    aria-label="Hide navigation"
+    aria-expanded="true"
+    title="Hide sidebar"
+>
+    &lt;
+</button>
+<main class="main">
+    <header class="header">
+        <div>
+            <h1>Custom Commands</h1>
+            <p>Create your own WhatsApp bot commands.</p>
+        </div>
+    </header>
+
+    <div id="premiumLock" class="premium-lock" style="display:none;">
+        <h3>Premium Feature</h3>
+        <p>Custom Commands are available to Premium subscribers only. Upgrade your subscription to unlock them.</p>
+        <a href="subscription.html">View subscription plans</a>
+    </div>
+
+    <div id="commandContent" style="display:none;">
+        <section class="command-card">
+            <h2>Create a Command</h2>
+            <p class="command-description">Choose a command name and the message your bot should send when someone uses it.</p>
+
+            <label class="command-label" for="commandName">Command name</label>
+            <input id="commandName" class="command-input" maxlength="30"
+                placeholder="e.g. greeting">
+
+            <p class="command-notice">Do not include the dot. Example: greeting becomes .greeting</p>
+
+            <label class="command-label" for="commandResponse">Response message</label>
+            <textarea id="commandResponse" class="command-input" maxlength="1000"
+                placeholder="Hello! Welcome to our WhatsApp service."></textarea>
+
+            <button type="button" class="command-button" id="saveCommand">Add Command</button>
+            <button type="button" class="command-button" id="cancelEdit" style="display:none;">Cancel Edit</button>
+
+            <p id="commandCount" class="command-notice">0 / 20 commands</p>
+        </section>
+
+        <section class="command-card">
+            <h2>Your Saved Commands</h2>
+            <p class="command-description">Manage the custom commands saved to your account.</p>
+            <div id="commandList">Loading commands...</div>
+        </section>
+    </div>
+
+    <p id="commandMessage" class="command-notice"></p>
+</main>
+
+<script src="custom-commands.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
+

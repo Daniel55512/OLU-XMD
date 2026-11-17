@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Owner Login | OLU-XMD</title>
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+            color: #fff;
+            background:
+                radial-gradient(circle at top right, #263e82 0, transparent 40%),
+                linear-gradient(135deg, #07112e, #132563 60%, #080f24);
+        }
+        .login-card {
+            width: 100%;
+            max-width: 420px;
+            padding: 38px 30px;
+            border: 1px solid rgba(255,255,255,.12);
+            border-radius: 20px;
+            background: rgba(10, 22, 55, .94);
+            box-shadow: 0 20px 60px rgba(0,0,0,.35);
+        }
+        .logo {
+            text-align: center;
+            font-size: 30px;
+            font-weight: 800;
+            letter-spacing: 1px;
+        }
+        .logo span { color: #FF7A00; }
+        h2 { text-align: center; margin: 24px 0 8px; }
+        .subtitle {
+            text-align: center;
+            color: #b8c4e3;
+            font-size: 14px;
+            margin-bottom: 28px;
+        }
+        label {
+            display: block;
+            margin: 16px 0 7px;
+            font-size: 13px;
+            font-weight: bold;
+        }
+        input {
+            width: 100%;
+            padding: 14px;
+            border: 1px solid #354878;
+            border-radius: 9px;
+            background: #101d40;
+            color: white;
+            outline: none;
+        }
+        input:focus { border-color: #FF7A00; }
+        button {
+            width: 100%;
+            padding: 14px;
+            margin-top: 24px;
+            border: 0;
+            border-radius: 9px;
+            background: #FF7A00;
+            color: #111827;
+            font-weight: 800;
+            cursor: pointer;
+        }
+        button:disabled { opacity: .6; cursor: wait; }
+        #message {
+            min-height: 22px;
+            margin-top: 16px;
+            text-align: center;
+            font-size: 13px;
+            color: #ffb5a8;
+        }
+        .back {
+            display: block;
+            margin-top: 20px;
+            text-align: center;
+            color: #c4d0ed;
+            font-size: 13px;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <main class="login-card">
+        <div class="logo">OLU<span>-XMD</span></div>
+        <h2>Owner Control Panel</h2>
+        <p class="subtitle">Sign in securely to manage your platform.</p>
+
+        <form id="ownerLoginForm">
+            <label for="email">Owner Email Address</label>
+            <input type="email" id="email" autocomplete="username" required>
+
+            <label for="password">Password</label>
+            <input type="password" id="password" autocomplete="current-password" required>
+
+            <button type="submit" id="loginButton">Secure Owner Login</button>
+            <p id="message" role="alert"></p>
+        </form>
+
+        <a class="back" href="/index.html">Back to Main Dashboard</a>
+    </main>
+
+    <script>
+        const form = document.getElementById("ownerLoginForm");
+        const button = document.getElementById("loginButton");
+        const message = document.getElementById("message");
+
+        form.addEventListener("submit", async event => {
+            event.preventDefault();
+            button.disabled = true;
+            button.textContent = "Verifying...";
+            message.textContent = "";
+
+            try {
+                const response = await fetch("/api/owner/login", {
+                    method: "POST",
+                    credentials: "same-origin",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        email: document.getElementById("email").value,
+                        password: document.getElementById("password").value
+                    })
+                });
+
+                const result = await response.json();
+
+                if (!response.ok || !result.success) {
+                    throw new Error(result.message || "Owner login failed.");
+                }
+
+                window.location.href = "/admin.html";
+            } catch (error) {
+                message.textContent = error.message || "Unable to login.";
+                button.disabled = false;
+                button.textContent = "Secure Owner Login";
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,34 +1,90 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register | OLU-XMD</title>
+    <meta name="theme-color" content="#132563">
+    <title>Create Account | OLU-XMD</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="auth.css">
 </head>
-<body>
 
-    <main class="main">
-        <section class="deploy">
-            <h2>Create Your OLU-XMD Account</h2>
-            <p>Register to access your bot deployment dashboard.</p>
+<body class="auth-page">
 
-            <form id="registerForm">
-                <label>Full Name</label>
-                <input type="text" id="name" required>
+    <main class="auth-main">
+        <section class="auth-card">
 
-                <label>Email Address</label>
-                <input type="email" id="email" required>
+            <div class="auth-brand">
+                <div class="auth-logo">OLU<span>-XMD</span></div>
+                <div class="auth-tagline">WhatsApp Automation Platform</div>
+            </div>
 
-                <label>Password</label>
-                <input type="password" id="password" minlength="8" required>
+            <h1>Create Your Account</h1>
+            <p class="auth-description">
+                Join OLU-XMD and start managing your WhatsApp bot.
+            </p>
 
-                <br><br>
+            
+            <div class="auth-google-section">
+                <div id="googleSignInButton" class="google-signin-button"></div>
+                <div class="auth-divider">OR CONTINUE WITH EMAIL</div>
+            </div><form id="registerForm" class="auth-form">
 
-                <button type="submit">Create Account</button>
+                <label for="name">Full Name</label>
+                <input
+                    type="text"
+                    id="name"
+                    placeholder="Enter your full name"
+                    autocomplete="name"
+                    required
+                >
+
+                <label for="email">Email Address</label>
+                <input
+                    type="email"
+                    id="email"
+                    placeholder="Enter your email address"
+                    autocomplete="email"
+                    required
+                >
+
+                <label for="countryCode">Country</label>
+                <select id="countryCode" required>
+                    <option value="">Select your country</option>
+                    <option value="NG">Nigeria</option>
+                    <option value="GH">Ghana</option>
+                    <option value="ZA">South Africa</option>
+                    <option value="US">United States</option>
+                </select>
+
+                <label for="password">Create Password</label>
+                <input
+                    type="password"
+                    id="password"
+                    placeholder="At least 8 characters"
+                    autocomplete="new-password"
+                    minlength="8"
+                    required
+                >
+
+                <button type="submit" class="auth-submit">
+                    Create My Account
+                </button>
+
             </form>
 
-            <p id="message"></p>
+            <p id="message" class="auth-message" role="status" aria-live="polite"></p>
+            <div id="googleAuthExtra"></div>
+
+            <div class="auth-links">
+                Already have an account?
+                <a href="login.html">Login Here</a>
+            </div>
+
+            <p class="auth-security-note">
+                Your account details are submitted securely to OLU-XMD.
+            </p>
+
         </section>
     </main>
 
@@ -37,7 +93,11 @@
             event.preventDefault();
 
             const message = document.getElementById("message");
+            const button = this.querySelector('button[type="submit"]');
+
             message.textContent = "Creating your account...";
+            button.disabled = true;
+            button.textContent = "Creating Account...";
 
             try {
                 const response = await fetch("/api/register", {
@@ -46,20 +106,38 @@
                         "Content-Type": "application/json"
                     },
                     body: JSON.stringify({
-                        name: document.getElementById("name").value,
-                        email: document.getElementById("email").value,
-                        password: document.getElementById("password").value
+                        name: document.getElementById("name").value.trim(),
+                        email: document.getElementById("email").value.trim(),
+                        password: document.getElementById("password").value,
+                        countryCode: document.getElementById("countryCode").value
                     })
                 });
 
                 const result = await response.json();
-                message.textContent = result.message;
+
+                if (response.ok && result.success) {
+                    message.textContent = "Account created successfully! Redirecting you to login...";
+
+                    setTimeout(function () {
+                        window.location.href = "/login.html";
+                    }, 1500);
+
+                } else {
+                    message.textContent =
+                        result.message ||
+                        "Unable to create your account. Please try again.";
+                }
 
             } catch (error) {
-                message.textContent = "Unable to connect to the server.";
+                message.textContent = "Unable to connect to the server. Please try again.";
+            } finally {
+                button.disabled = false;
+                button.textContent = "Create My Account";
             }
         });
     </script>
 
-</body>
+    <script src="google-auth.js"></script></body>
 </html>
+
+

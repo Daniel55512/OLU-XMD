@@ -1,51 +1,454 @@
+﻿
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OLU-XMD | Connect WhatsApp</title>
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OLU-XMD | Connect WhatsApp</title>
+<link rel="stylesheet" href="style.css">
+
+<style>
+
+/* OLU-XMD CONNECT WHATSAPP PREMIUM DESIGN V1 */
+
+.deploy {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 auto !important;
+    padding: 28px !important;
+    border: 1px solid #465AA8 !important;
+    border-radius: 21px !important;
+    background: linear-gradient(145deg, #172052, #293879) !important;
+    color: #FFFFFF !important;
+    box-shadow: 0 12px 32px rgba(0,0,0,.2);
+}
+
+.deploy h2 {
+    margin-bottom: 11px !important;
+    color: #F7C843 !important;
+    font-size: 21px !important;
+    font-weight: 900 !important;
+}
+
+.deploy p {
+    color: #DCE4FF !important;
+    font-size: 13px !important;
+    line-height: 1.75 !important;
+}
+
+.deploy label {
+    display: block;
+    margin: 22px 0 9px !important;
+    color: #F7C843 !important;
+    font-size: 13px !important;
+    font-weight: 800 !important;
+}
+
+.deploy input#phoneNumber {
+    width: 100% !important;
+    min-height: 49px;
+    padding: 14px !important;
+    border: 1px solid #5369A8 !important;
+    border-radius: 11px !important;
+    background: #132563 !important;
+    color: #FFFFFF !important;
+    font-size: 15px !important;
+    outline: none;
+}
+
+.deploy input#phoneNumber::placeholder {
+    color: #AEBBE5 !important;
+}
+
+.deploy input#phoneNumber:focus {
+    border-color: #F7C843 !important;
+    box-shadow: 0 0 0 3px rgba(247,200,67,.13);
+}
+
+.deploy button {
+    min-height: 46px;
+    padding: 12px 18px !important;
+    margin: 9px 7px 5px 0 !important;
+    border: 0 !important;
+    border-radius: 10px !important;
+    font-size: 13px !important;
+    font-weight: 900 !important;
+    cursor: pointer;
+    transition: transform .2s ease, background .2s ease;
+}
+
+.deploy button:hover:not(:disabled) {
+    transform: translateY(-2px);
+}
+
+.deploy button:disabled {
+    opacity: .6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+#connectButton {
+    background: #F7C843 !important;
+    color: #132563 !important;
+}
+
+#reconnectButton {
+    background: #3156D9 !important;
+    color: #FFFFFF !important;
+}
+
+#qrConnectButton {
+    background: #7046B8 !important;
+    color: #FFFFFF !important;
+}
+
+#connectionMessage {
+    display: block !important;
+    width: 100% !important;
+    min-width: 0;
+    height: auto !important;
+    max-height: none !important;
+    min-height: 45px;
+    margin: 20px 0 !important;
+    padding: 15px !important;
+    border: 1px solid rgba(247,200,67,.25) !important;
+    border-left: 4px solid #F7C843 !important;
+    border-radius: 11px !important;
+    background: rgba(247,200,67,.08) !important;
+    color: #FDE9B0 !important;
+    font-size: 13px !important;
+    line-height: 1.7 !important;
+    white-space: normal !important;
+    overflow: visible !important;
+    overflow-wrap: anywhere !important;
+    text-overflow: clip !important;
+}
+
+#pairingCode {
+    display: none;
+    width: 100%;
+    padding: 25px;
+    margin: 22px 0;
+    border: 1px dashed #F7C843;
+    border-radius: 17px;
+    background: linear-gradient(145deg, #132563, #263D82);
+    color: #FFFFFF;
+    text-align: center;
+    box-shadow: 0 8px 22px rgba(0,0,0,.16);
+}
+
+.pairing-label {
+    margin-bottom: 13px;
+    color: #F7C843 !important;
+    font-size: 12px;
+    font-weight: 900;
+    letter-spacing: 1.5px;
+}
+
+#pairingCodeValue {
+    display: block;
+    padding: 15px 8px;
+    color: #FFFFFF !important;
+    font-size: clamp(25px, 5vw, 36px) !important;
+    font-weight: 900 !important;
+    letter-spacing: 6px;
+    overflow-wrap: anywhere;
+    cursor: pointer;
+}
+
+#pairingCode p {
+    margin: 8px 0 15px;
+    color: #DCE4FF !important;
+}
+
+#copyCodeButton {
+    min-width: 180px;
+    background: #F7C843 !important;
+    color: #132563 !important;
+}
+
+#copyMessage {
+    color: #F7C843 !important;
+    font-weight: 800;
+    overflow-wrap: anywhere;
+}
+
+#qrContainer {
+    display: none;
+    width: 100%;
+    padding: 24px;
+    margin: 22px 0;
+    border: 1px solid #465AA8;
+    border-radius: 17px;
+    background: #172052 !important;
+    color: #FFFFFF !important;
+    text-align: center;
+}
+
+#qrContainer p {
+    color: #E1E7FF !important;
+}
+
+#qrCodeImage {
+    display: block;
+    width: 260px;
+    max-width: 100%;
+    height: auto;
+    margin: 20px auto;
+    padding: 12px;
+    border: 1px solid #FFFFFF;
+    border-radius: 12px;
+    background: #FFFFFF !important;
+}
+
+.deploy hr {
+    border: 0;
+    border-top: 1px solid rgba(255,255,255,.18);
+    margin: 30px 0 !important;
+}
+
+#deviceManager {
+    width: 100%;
+    margin-top: 25px !important;
+    padding: 24px !important;
+    border: 1px solid #5369A8 !important;
+    border-radius: 17px !important;
+    background: #132563 !important;
+    color: #FFFFFF !important;
+}
+
+#deviceManager h2 {
+    margin-bottom: 18px !important;
+    color: #F7C843 !important;
+    font-size: 19px !important;
+    font-weight: 900 !important;
+}
+
+.device-info {
+    display: block;
+    width: 100%;
+    min-width: 0;
+    padding: 15px !important;
+    margin: 12px 0 !important;
+    border: 1px solid rgba(255,255,255,.13) !important;
+    border-radius: 11px !important;
+    background: rgba(255,255,255,.07) !important;
+    color: #DCE4FF !important;
+    font-size: 13px !important;
+    line-height: 1.7;
+    overflow-wrap: anywhere;
+}
+
+.device-info strong {
+    color: #F7C843 !important;
+    font-weight: 900;
+}
+
+#deviceStatus {
+    color: #4ADE80 !important;
+}
+
+#stopBotButton {
+    background: #DC2626 !important;
+    color: #FFFFFF !important;
+}
+
+#startBotButton {
+    background: #16834D !important;
+    color: #FFFFFF !important;
+}
+
+#deviceMessage {
+    margin-top: 15px;
+    margin-bottom: 0;
+    color: #DCE4FF !important;
+    font-size: 13px;
+    line-height: 1.7;
+    overflow-wrap: anywhere;
+}
+
+@media (max-width: 600px) {
+
+    .deploy {
+        padding: 18px !important;
+        border-radius: 16px !important;
+    }
+
+    .deploy h2 {
+        font-size: 18px !important;
+    }
+
+    .deploy button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100% !important;
+        min-height: 47px;
+        margin: 9px 0 !important;
+    }
+
+    #pairingCode {
+        padding: 17px;
+    }
+
+    #pairingCodeValue {
+        font-size: 25px !important;
+        letter-spacing: 4px;
+    }
+
+    #qrContainer {
+        padding: 16px;
+    }
+
+    #deviceManager {
+        padding: 17px !important;
+    }
+
+    .device-info {
+        padding: 12px !important;
+        font-size: 12px !important;
+    }
+}
+
+</style>
 </head>
+
 <body>
+   <aside class="sidebar">
+    <div class="logo">OLU<span>-XMD</span></div>
 
-    <main class="main">
-        <header class="header">
-            <h1>Connect WhatsApp</h1>
-            <a href="index.html">Dashboard</a>
-        </header>
-
-        <section class="deploy">
-            <h2>Connect Your WhatsApp Account</h2>
-
-            <p>Enter your WhatsApp number to request a pairing code.</p>
-
-            <label for="phoneNumber">WhatsApp Phone Number</label>
-
-            <input
-                type="tel"
-                id="phoneNumber"
-                placeholder="2349010215113"
-            >
-
-            <button type="button" id="connectButton">
-                Generate Pairing Code
-            </button>
-            <button type="button" id="reconnectButton">
-    Reconnect Saved WhatsApp
+    <a href="/dashboard.html">Dashboard</a>
+    <a href="bot.html">My Bot</a>
+    <a href="auto-reply.html">Auto Reply</a>
+    <a href="custom-commands.html">Custom Commands</a>
+    <a href="subscription.html">My Subscription</a>
+    <a href="connect.html" class="active">Connect WhatsApp</a>
+    <a href="#">Deployments</a>
+    <a href="#">Commands</a>
+    <a href="#">Settings</a>
+    <a href="login.html" id="loginButton" style="display: none;">Login</a>
+    <a href="#" id="logoutButton" style="display: none;">Logout</a>
+</aside>
+<button
+    type="button"
+    id="desktopSidebarToggle"
+    class="desktop-sidebar-toggle"
+    aria-label="Hide navigation"
+    aria-expanded="true"
+    title="Hide sidebar"
+>
+    â€¹
 </button>
+<main class="main">
 
-            <p id="connectionMessage">
-                Your connection status will appear here.
-            </p>
+<header class="header inner-page-header">
+    <div class="inner-page-heading">
+        <a class="inner-back-link"
+           href="/dashboard.html"
+           aria-label="Go back"
+           title="Go back"
+           onclick="if (document.referrer && new URL(document.referrer).origin === window.location.origin) { window.history.back(); return false; }">
+            <span aria-hidden="true">&larr;</span>
+        </a>
 
-            <h3 id="pairingCode"></h3>
-        </section>
-    </main>
+        <div class="inner-page-title">
+            <h1>Connect WhatsApp</h1>
+            <p>Link or reconnect your WhatsApp account.</p>
+        </div>
+    </div>
+</header>
+
+<section class="deploy">
+
+    <h2>Connect Your WhatsApp Account</h2>
+    <p>Enter your WhatsApp number with country code to request a pairing code.</p>
+
+    <label for="phoneNumber">WhatsApp Phone Number</label>
+    <input type="tel" id="phoneNumber" placeholder="2349010215113">
+
+    <button type="button" id="connectButton">Generate Pairing Code</button>
+    <button type="button" id="reconnectButton">Reconnect Saved WhatsApp</button>
+    <button type="button" id="qrConnectButton">Connect Using QR Code</button>
+
+    <p id="connectionMessage">Your connection status will appear here.</p>
+
+    <div id="pairingCode">
+        <div class="pairing-label">YOUR WHATSAPP PAIRING CODE</div>
+        <span id="pairingCodeValue" title="Tap to copy"></span>
+        <p>Tap the code or use the button below to copy it.</p>
+        <button type="button" id="copyCodeButton">Copy Pairing Code</button>
+        <p id="copyMessage" aria-live="polite"></p>
+    </div>
+
+    <div id="qrContainer" style="display:none;">
+        <p>Open WhatsApp â†’ Linked Devices â†’ Link a Device, then scan this QR code.</p>
+        <img id="qrCodeImage" alt="WhatsApp connection QR code">
+    </div>
+
+    <hr>
+
+    <section id="deviceManager">
+        <h2>WhatsApp Device Manager</h2>
+
+        <div class="device-info">
+            Connection Status: <strong id="deviceStatus">Checking...</strong>
+        </div>
+
+        <div class="device-info">
+            Linked WhatsApp Number: <strong id="linkedNumber">Checking...</strong>
+        </div>
+
+        <button type="button" id="stopBotButton">Stop Bot</button>
+        <button type="button" id="startBotButton">Start Bot</button>
+
+        <p id="deviceMessage" aria-live="polite"></p>
+
+    </section>
+
+</section>
+</main>
+
 <script>
 const connectButton = document.getElementById("connectButton");
 const reconnectButton = document.getElementById("reconnectButton");
+const qrConnectButton = document.getElementById("qrConnectButton");
+
+const message = document.getElementById("connectionMessage");
+const codeBox = document.getElementById("pairingCode");
+const codeValue = document.getElementById("pairingCodeValue");
+const copyMessage = document.getElementById("copyMessage");
 
 let isConnecting = false;
+
+async function copyPairingCode() {
+    const code = codeValue.textContent.trim();
+    if (!code) return;
+
+    try {
+        if (navigator.clipboard && window.isSecureContext) {
+            await navigator.clipboard.writeText(code);
+        } else {
+            const temp = document.createElement("textarea");
+            temp.value = code;
+            temp.style.position = "fixed";
+            temp.style.opacity = "0";
+            document.body.appendChild(temp);
+            temp.select();
+
+            const copied = document.execCommand("copy");
+            temp.remove();
+
+            if (!copied) throw new Error("Copy unavailable");
+        }
+
+        copyMessage.textContent = "Pairing code copied! Paste it into WhatsApp.";
+    } catch (error) {
+        copyMessage.textContent = "Automatic copy unavailable. Please select and copy the code manually.";
+    }
+}
+
+codeValue.addEventListener("click", copyPairingCode);
+document.getElementById("copyCodeButton").addEventListener("click", copyPairingCode);
 
 connectButton.addEventListener("click", async () => {
     if (isConnecting) return;
@@ -54,19 +457,17 @@ connectButton.addEventListener("click", async () => {
     connectButton.disabled = true;
 
     const phoneNumber = document.getElementById("phoneNumber").value.trim();
-    const message = document.getElementById("connectionMessage");
-    const codeDisplay = document.getElementById("pairingCode");
 
     message.textContent = "Requesting pairing code...";
-    codeDisplay.textContent = "";
+    codeBox.style.display = "none";
+    codeValue.textContent = "";
+    copyMessage.textContent = "";
 
     try {
         const response = await fetch("/api/whatsapp/pair", {
             method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({ phoneNumber })
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({phoneNumber})
         });
 
         const result = await response.json();
@@ -75,12 +476,20 @@ connectButton.addEventListener("click", async () => {
             throw new Error(result.message || "Unable to connect.");
         }
 
-        message.textContent = "Pairing code generated. Enter it in WhatsApp.";
-        codeDisplay.textContent = result.pairingCode || "";
+        codeValue.textContent = result.pairingCode || "";
+
+        if (codeValue.textContent) {
+            codeBox.style.display = "block";
+            message.textContent = "Pairing code generated. Tap the code to copy it.";
+
+            // Attempt automatic copying immediately after generation.
+            await copyPairingCode();
+        } else {
+            message.textContent = "No pairing code was returned. Please try again.";
+        }
 
     } catch (error) {
         message.textContent = error.message;
-
     } finally {
         isConnecting = false;
         connectButton.disabled = false;
@@ -89,12 +498,8 @@ connectButton.addEventListener("click", async () => {
 
 reconnectButton.addEventListener("click", async () => {
     reconnectButton.disabled = true;
-
-    const message = document.getElementById("connectionMessage");
-    const codeDisplay = document.getElementById("pairingCode");
-
     message.textContent = "Reconnecting to saved WhatsApp session...";
-    codeDisplay.textContent = "";
+    codeBox.style.display = "none";
 
     try {
         const response = await fetch("/api/whatsapp/reconnect", {
@@ -108,14 +513,273 @@ reconnectButton.addEventListener("click", async () => {
         }
 
         message.textContent = result.message;
+        await refreshDeviceInfo();
 
     } catch (error) {
         message.textContent = error.message;
-
     } finally {
         reconnectButton.disabled = false;
     }
 });
+
+qrConnectButton.addEventListener("click", async () => {
+    qrConnectButton.disabled = true;
+
+    const qrContainer = document.getElementById("qrContainer");
+    const qrImage = document.getElementById("qrCodeImage");
+
+    message.textContent = "Generating QR code...";
+    codeBox.style.display = "none";
+    qrImage.removeAttribute("src");
+    qrContainer.style.display = "none";
+
+    try {
+        const response = await fetch("/api/whatsapp/qr/start", {
+            method: "POST"
+        });
+
+        const result = await response.json();
+
+        if (!response.ok) {
+            throw new Error(result.message || "Unable to generate QR code.");
+        }
+
+        qrImage.src = result.qrDataUrl;
+        qrContainer.style.display = "block";
+
+        message.textContent =
+            "QR code ready. Open WhatsApp, select Linked Devices, then Link a Device and scan the code.";
+
+    } catch (error) {
+        message.textContent = error.message;
+    } finally {
+        qrConnectButton.disabled = false;
+    }
+});
+
+// OLU-XMD DEVICE MANAGER SMART CONTROLS V1
+
+let oluDeviceControlInProgress = false;
+let oluDeviceRefreshInProgress = false;
+let oluLastDeviceStatus = "unknown";
+
+function updateDeviceControls(status) {
+    const startButton = document.getElementById("startBotButton");
+    const stopButton = document.getElementById("stopBotButton");
+
+    oluLastDeviceStatus = status;
+
+    const canStart = status === "disconnected" || status === "stopped";
+    const canStop = status === "connected";
+
+    startButton.disabled = oluDeviceControlInProgress || !canStart;
+    stopButton.disabled = oluDeviceControlInProgress || !canStop;
+}
+
+async function refreshDeviceInfo(preserveMessage = false) {
+    if (oluDeviceRefreshInProgress) return;
+
+    oluDeviceRefreshInProgress = true;
+
+    const statusElement = document.getElementById("deviceStatus");
+    const numberElement = document.getElementById("linkedNumber");
+    const deviceMessage = document.getElementById("deviceMessage");
+
+    try {
+        const [statusResponse, numberResponse] = await Promise.all([
+            fetch("/api/whatsapp/status"),
+            fetch("/api/whatsapp/number")
+        ]);
+
+        if (!statusResponse.ok) {
+            throw new Error("Unable to retrieve WhatsApp status.");
+        }
+
+        const statusData = await statusResponse.json();
+
+        const numberData = numberResponse.ok
+            ? await numberResponse.json()
+            : {};
+
+        const status = String(statusData.status || "unknown")
+            .trim()
+            .toLowerCase();
+
+        const statusLabels = {
+            connected: "CONNECTED",
+            connecting: "CONNECTING",
+            reconnecting: "RECONNECTING",
+            disconnected: "DISCONNECTED",
+            stopped: "STOPPED"
+        };
+
+        const statusMessages = {
+            connected: "WhatsApp is connected. Your bot is online.",
+            connecting: "WhatsApp connection is starting...",
+            reconnecting: "WhatsApp is reconnecting...",
+            disconnected: "WhatsApp is disconnected. You can start the bot.",
+            stopped: "WhatsApp bot is stopped. Your account remains linked."
+        };
+
+        const statusColors = {
+            connected: "#4ADE80",
+            connecting: "#F7C843",
+            reconnecting: "#F7C843",
+            disconnected: "#F87171",
+            stopped: "#F7C843"
+        };
+
+        statusElement.textContent = statusLabels[status] || "UNAVAILABLE";
+        statusElement.style.setProperty(
+            "color",
+            statusColors[status] || "#F7C843",
+            "important"
+        );
+
+        statusElement.dataset.status = status;
+
+        numberElement.textContent =
+            numberData.number || "Not connected";
+
+        updateDeviceControls(status);
+
+        if (!preserveMessage && !oluDeviceControlInProgress) {
+            deviceMessage.textContent =
+                statusMessages[status] ||
+                "WhatsApp status is currently unavailable.";
+        }
+
+    } catch (error) {
+        statusElement.textContent = "UNAVAILABLE";
+        statusElement.dataset.status = "unknown";
+        statusElement.style.setProperty(
+            "color",
+            "#F87171",
+            "important"
+        );
+
+        numberElement.textContent = "Unavailable";
+
+        // Never enable controls when the server status is unknown.
+        updateDeviceControls("unknown");
+
+        if (!preserveMessage && !oluDeviceControlInProgress) {
+            deviceMessage.textContent =
+                "Unable to check WhatsApp status. Please refresh.";
+        }
+
+    } finally {
+        oluDeviceRefreshInProgress = false;
+    }
+}
+
+async function controlBot(action) {
+    if (oluDeviceControlInProgress) return;
+
+    const allowed =
+        action === "stop"
+            ? oluLastDeviceStatus === "connected"
+            : (
+                oluLastDeviceStatus === "disconnected" ||
+                oluLastDeviceStatus === "stopped"
+            );
+
+    if (!allowed) {
+        await refreshDeviceInfo();
+        return;
+    }
+
+    const button = document.getElementById(
+        action === "stop" ? "stopBotButton" : "startBotButton"
+    );
+
+    const originalText = button.textContent;
+    const deviceMessage = document.getElementById("deviceMessage");
+
+    oluDeviceControlInProgress = true;
+
+    updateDeviceControls(oluLastDeviceStatus);
+
+    button.textContent =
+        action === "stop" ? "Stopping..." : "Starting...";
+
+    deviceMessage.textContent =
+        action === "stop"
+            ? "Stopping WhatsApp bot safely..."
+            : "Starting WhatsApp using your saved session...";
+
+    try {
+        const response = await fetch(`/api/whatsapp/${action}`, {
+            method: "POST"
+        });
+
+        const result = await response.json();
+
+        if (!response.ok || result.success === false) {
+            throw new Error(result.message || "WhatsApp control request failed.");
+        }
+
+        deviceMessage.textContent =
+            result.message || "WhatsApp control request successful.";
+
+    } catch (error) {
+        deviceMessage.textContent = error.message;
+
+    } finally {
+        oluDeviceControlInProgress = false;
+        button.textContent = originalText;
+
+        // Re-read the actual server status before enabling either button.
+        await refreshDeviceInfo(true);
+    }
+}
+
+document.getElementById("stopBotButton").addEventListener("click", () => {
+    controlBot("stop");
+});
+
+document.getElementById("startBotButton").addEventListener("click", () => {
+    controlBot("start");
+});
+
+refreshDeviceInfo();
+setInterval(refreshDeviceInfo, 5000);
+</script>
+
+<script src="script.js"></script>
+<script>
+(function () {
+    const toggle = document.getElementById("desktopSidebarToggle");
+    const key = "oluXmdSidebarCollapsed";
+
+    if (!toggle || toggle.dataset.connectToggleReady) return;
+
+    toggle.dataset.connectToggleReady = "true";
+
+    function updateToggle() {
+        const collapsed = document.body.classList.contains(
+            "desktop-sidebar-collapsed"
+        );
+
+        toggle.textContent = collapsed ? ">" : "<";
+        toggle.title = collapsed ? "Show sidebar" : "Hide sidebar";
+        toggle.setAttribute("aria-expanded", String(!collapsed));
+    }
+
+    toggle.addEventListener("click", function () {
+        const collapsed = document.body.classList.toggle(
+            "desktop-sidebar-collapsed"
+        );
+
+        try {
+            localStorage.setItem(key, String(collapsed));
+        } catch (error) {}
+
+        updateToggle();
+    });
+
+    updateToggle();
+})();
 </script>
 </body>
 </html>

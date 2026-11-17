@@ -1,0 +1,430 @@
+﻿/* OLU-XMD CUSTOMER DASHBOARD — VISUAL POLISH */
+
+body.dashboard-page {
+    background: #F3F6FC !important;
+    color: #172554 !important;
+    min-height: 100vh;
+}
+
+body.dashboard-page .main {
+    background: #F3F6FC !important;
+    color: #172554 !important;
+    min-height: 100vh;
+    padding: 30px;
+}
+
+/* SIDEBAR */
+body.dashboard-page .sidebar {
+    background: #132563 !important;
+    border-right: 1px solid rgba(255,255,255,.08);
+    box-shadow: 5px 0 24px rgba(19,37,99,.10);
+}
+
+body.dashboard-page .sidebar .logo {
+    color: #FFFFFF !important;
+    font-size: 23px;
+    font-weight: 900;
+    letter-spacing: .5px;
+    margin-bottom: 32px;
+}
+
+body.dashboard-page .sidebar .logo span {
+    color: #F7C843 !important;
+}
+
+body.dashboard-page .sidebar a {
+    display: block;
+    color: #E5EAFB !important;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 10px;
+    padding: 12px 14px;
+    margin: 5px 0;
+    transition: background .2s ease, transform .2s ease;
+}
+
+body.dashboard-page .sidebar a:hover,
+body.dashboard-page .sidebar a.active {
+    background: #29458F !important;
+    color: #FFFFFF !important;
+}
+
+body.dashboard-page .sidebar a.active {
+    border-left: 3px solid #F7C843;
+}
+
+/* HEADER AND ACCOUNT */
+body.dashboard-page .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    flex-wrap: wrap;
+    padding: 18px 22px;
+    margin-bottom: 24px;
+    background: #FFFFFF !important;
+    border: 1px solid #E5EAF4;
+    border-radius: 16px;
+    box-shadow: 0 5px 20px rgba(25,42,90,.05);
+}
+
+body.dashboard-page .profile-area {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    min-width: 0;
+}
+
+body.dashboard-page #welcomeMessage {
+    color: #132563 !important;
+    font-size: 16px;
+    font-weight: 800;
+    overflow-wrap: anywhere;
+}
+
+body.dashboard-page .profile-trigger {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 43px;
+    height: 43px;
+    border-radius: 50%;
+    background: #132563 !important;
+    color: #FFFFFF !important;
+    border: 2px solid #F7C843;
+    cursor: pointer;
+}
+
+body.dashboard-page .profile-dropdown {
+    background: #FFFFFF !important;
+    border: 1px solid #E5EAF4;
+    border-radius: 14px;
+    box-shadow: 0 12px 35px rgba(19,37,99,.16);
+}
+
+body.dashboard-page .profile-dropdown a {
+    display: block;
+    color: #132563 !important;
+    padding: 10px;
+    border-radius: 8px;
+    text-decoration: none;
+}
+
+body.dashboard-page .profile-dropdown a:hover {
+    background: #F0F4FF;
+}
+
+body.dashboard-page .profile-identity strong {
+    color: #132563 !important;
+}
+
+body.dashboard-page .profile-identity span {
+    color: #64748B !important;
+}
+
+body.dashboard-page .profile-dropdown-heading {
+    color: #D66A00 !important;
+}
+
+/* SYSTEM STATUS */
+body.dashboard-page .header .status {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 9px 14px;
+    border-radius: 30px;
+    background: #FFF6E8;
+    color: #9A5100 !important;
+    font-size: 12px;
+    font-weight: 800;
+}
+
+/* DASHBOARD CARDS */
+body.dashboard-page .cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    gap: 18px;
+    margin: 0 0 24px;
+}
+
+body.dashboard-page .card {
+    min-width: 0;
+    padding: 23px;
+    background: #FFFFFF !important;
+    color: #172554 !important;
+    border: 1px solid #E5EAF4 !important;
+    border-radius: 17px;
+    box-shadow: 0 5px 20px rgba(25,42,90,.05);
+    transition: transform .2s ease, box-shadow .2s ease;
+}
+
+body.dashboard-page .card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(25,42,90,.09);
+}
+
+body.dashboard-page .card h3 {
+    color: #64748B !important;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: .5px;
+    line-height: 1.5;
+}
+
+body.dashboard-page .card p {
+    color: #132563 !important;
+    font-size: 25px;
+    font-weight: 900;
+    overflow-wrap: anywhere;
+    margin-top: 10px;
+}
+
+body.dashboard-page .card a {
+    display: inline-block;
+    margin-top: 12px;
+    color: #D66A00 !important;
+    font-size: 13px;
+    font-weight: 800;
+    text-decoration: none;
+}
+
+body.dashboard-page .card a:hover {
+    text-decoration: underline;
+}
+
+/* XMD COIN CARD */
+body.dashboard-page .card.xmd-coin-card {
+    background: linear-gradient(145deg, #132563, #263D82) !important;
+    border: 1px solid #344C92 !important;
+}
+
+body.dashboard-page .card.xmd-coin-card h3,
+body.dashboard-page .card.xmd-coin-card a {
+    color: #F7C843 !important;
+}
+
+body.dashboard-page .card.xmd-coin-card p#dashboardXmdCoinBalance {
+    color: #FFFFFF !important;
+}
+
+body.dashboard-page .card.xmd-coin-card .xmd-coin-meta {
+    color: #E5EAFB !important;
+    line-height: 1.7;
+    overflow-wrap: anywhere;
+}
+
+/* WHATSAPP ONBOARDING PANEL */
+body.dashboard-page .deploy {
+    width: 100%;
+    max-width: 100%;
+    margin: 0 0 24px;
+    padding: 26px;
+    background: #FFFFFF !important;
+    color: #172554 !important;
+    border: 1px solid #E5EAF4 !important;
+    border-radius: 18px;
+    box-shadow: 0 5px 20px rgba(25,42,90,.05);
+}
+
+body.dashboard-page .deploy h2 {
+    color: #132563 !important;
+    font-size: 21px;
+    font-weight: 900;
+}
+
+body.dashboard-page .deploy p {
+    color: #64748B !important;
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+body.dashboard-page .deploy p strong {
+    color: #D66A00 !important;
+}
+
+body.dashboard-page .deploy label {
+    display: block;
+    margin: 18px 0 8px;
+    color: #132563 !important;
+    font-size: 13px;
+    font-weight: 800;
+}
+
+body.dashboard-page #dashboardConnectionForm {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    margin-top: 18px;
+}
+
+body.dashboard-page #dashboardPhoneNumber {
+    grid-column: 1 / -1;
+    width: 100%;
+    min-width: 0;
+    min-height: 48px;
+    padding: 13px 15px;
+    border: 1px solid #D8DFEC;
+    border-radius: 10px;
+    background: #F8FAFD;
+    color: #172554;
+    font-size: 15px;
+    box-sizing: border-box;
+}
+
+body.dashboard-page #dashboardPhoneNumber:focus {
+    outline: 2px solid rgba(255,122,0,.25);
+    border-color: #FF7A00;
+}
+
+body.dashboard-page #dashboardPairButton,
+body.dashboard-page #dashboardReconnectButton {
+    width: 100%;
+    min-height: 47px;
+    padding: 12px 15px;
+    border: 0;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: transform .2s ease, background .2s ease;
+}
+
+body.dashboard-page #dashboardPairButton {
+    background: #FF7A00 !important;
+    color: #FFFFFF !important;
+}
+
+body.dashboard-page #dashboardReconnectButton {
+    background: #132563 !important;
+    color: #FFFFFF !important;
+}
+
+body.dashboard-page #dashboardPairButton:hover,
+body.dashboard-page #dashboardReconnectButton:hover {
+    transform: translateY(-2px);
+}
+
+body.dashboard-page #dashboardPairButton:disabled,
+body.dashboard-page #dashboardReconnectButton:disabled {
+    opacity: .6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+body.dashboard-page #dashboardConnectionMessage {
+    padding: 13px 15px;
+    margin: 18px 0;
+    background: #F0F4FF;
+    border: 1px solid #DCE5FA;
+    border-left: 4px solid #3156D9;
+    border-radius: 9px;
+    color: #263D82 !important;
+    font-size: 13px;
+    line-height: 1.7;
+    overflow-wrap: anywhere;
+}
+
+body.dashboard-page #dashboardPairingCode {
+    color: #D66A00 !important;
+    font-size: 25px;
+    font-weight: 900;
+    letter-spacing: 2px;
+    overflow-wrap: anywhere;
+}
+
+body.dashboard-page #whatsappOnboarding hr {
+    border: 0;
+    border-top: 1px solid #E5EAF4;
+    margin: 20px 0;
+}
+
+body.dashboard-page #dashboardConnectionStatus,
+body.dashboard-page #connectedNumber {
+    color: #132563 !important;
+    font-weight: 800;
+    overflow-wrap: anywhere;
+}
+
+/* MOBILE RESPONSIVENESS */
+@media (max-width: 768px) {
+    body.dashboard-page .main {
+        margin-left: 0 !important;
+        width: 100%;
+        max-width: 100%;
+        padding: 18px 14px !important;
+        box-sizing: border-box;
+    }
+
+    body.dashboard-page .header {
+        align-items: center;
+        padding: 15px;
+        gap: 12px;
+        margin-bottom: 18px;
+    }
+
+    body.dashboard-page .profile-area {
+        flex: 1 1 180px;
+        gap: 9px;
+    }
+
+    body.dashboard-page #welcomeMessage {
+        font-size: 14px;
+    }
+
+    body.dashboard-page .header .status {
+        font-size: 10px;
+        padding: 7px 10px;
+    }
+
+    body.dashboard-page .cards {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+        margin-bottom: 18px;
+    }
+
+    body.dashboard-page .card {
+        padding: 17px;
+        border-radius: 14px;
+    }
+
+    body.dashboard-page .card p {
+        font-size: 21px;
+    }
+
+    body.dashboard-page .deploy {
+        padding: 19px;
+        margin-bottom: 18px;
+    }
+
+    body.dashboard-page .deploy h2 {
+        font-size: 19px;
+    }
+}
+
+@media (max-width: 480px) {
+    body.dashboard-page .cards {
+        grid-template-columns: 1fr;
+    }
+
+    body.dashboard-page #dashboardConnectionForm {
+        grid-template-columns: 1fr;
+    }
+
+    body.dashboard-page #dashboardPhoneNumber {
+        grid-column: 1;
+    }
+
+    body.dashboard-page #dashboardPairButton,
+    body.dashboard-page #dashboardReconnectButton {
+        width: 100%;
+    }
+
+    body.dashboard-page .header {
+        align-items: flex-start;
+    }
+
+    body.dashboard-page .profile-area {
+        flex-wrap: wrap;
+    }
+}

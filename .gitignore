@@ -7,3 +7,36 @@ sessions/
 .env.*
 creds.json
 *.backup
+# Local logs and diagnostic output
+*.log
+
+# Private WhatsApp identity information
+whatsapp-identities.txt
+
+# Local databases
+*.sqlite
+*.sqlite-*
+*.db
+*.db-shm
+*.db-wal
+
+# Local backups and previous file versions
+backup-*/
+backups/
+*-backup-*/
+*.backup*
+*.bak
+*.before-*
+*.status-backup
+*.status-temp-backup
+*.mobile-backup
+*.country-backup
+
+# Local editor settings and temporary checks
+.vscode/
+.connect-check.js
+.olu-xmd-safe-backup.cjs
+
+# Additional backup naming patterns
+*-before-*
+*.cleanup-*

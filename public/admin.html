@@ -1,0 +1,1892 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OLU-XMD | Owner Dashboard</title>
+<style>
+:root {
+    --bg:#0b1020;
+    --panel:#141c31;
+    --panel2:#1b2740;
+    --blue:#4169e1;
+    --orange:#ff7a00;
+    --gold:#f7c843;
+    --text:#f4f6fc;
+    --muted:#9aa8c0;
+    --border:#293650;
+}
+* {box-sizing:border-box}
+body {
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family:Arial,sans-serif;
+}
+.layout {display:flex;min-height:100vh}
+.sidebar {
+    width:245px;
+    background:#10182b;
+    padding:25px 16px;
+    border-right:1px solid var(--border);
+    position:fixed;
+    height:100vh;
+    overflow-y:auto;
+}
+.brand {
+    font-size:23px;
+    font-weight:bold;
+    color:white;
+    margin-bottom:6px;
+}
+.brand span {color:var(--orange)}
+.owner-label {
+    color:var(--gold);
+    font-size:11px;
+    letter-spacing:2px;
+    margin-bottom:30px;
+}
+.nav-title {
+    color:var(--muted);
+    font-size:11px;
+    margin:24px 10px 10px;
+    text-transform:uppercase;
+}
+.nav-item {
+    display:block;
+    padding:13px 12px;
+    margin:5px 0;
+    border-radius:8px;
+    color:#cbd5e8;
+    text-decoration:none;
+    cursor:pointer;
+    font-size:14px;
+}
+.nav-item:hover,.nav-item.active {
+    background:var(--panel2);
+    color:white;
+    border-left:3px solid var(--orange);
+}
+.main {
+    margin-left:245px;
+    width:calc(100% - 245px);
+    padding:30px;
+}
+.topbar {
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:15px;
+    margin-bottom:30px;
+}
+h1 {font-size:25px;margin:0 0 8px}
+.subtitle {color:var(--muted);font-size:13px}
+.owner-badge {
+    color:var(--gold);
+    border:1px solid var(--gold);
+    padding:9px 14px;
+    border-radius:20px;
+    font-size:12px;
+}
+.section {display:none}
+.section.active {display:block}
+.stats {
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(190px,1fr));
+    gap:18px;
+    margin:25px 0;
+}
+.card {
+    background:var(--panel);
+    border:1px solid var(--border);
+    padding:22px;
+    border-radius:12px;
+}
+.card-label {color:var(--muted);font-size:13px}
+.card-value {font-size:29px;font-weight:bold;margin-top:13px}
+.card-note {font-size:11px;color:var(--muted);margin-top:8px}
+.panel {
+    background:var(--panel);
+    border:1px solid var(--border);
+    padding:22px;
+    border-radius:12px;
+    margin-top:20px;
+}
+.panel h2 {font-size:17px;margin:0 0 15px}
+.status {color:#4ade80}
+.warning {color:var(--gold)}
+button {
+    background:var(--blue);
+    color:white;
+    border:0;
+    padding:11px 16px;
+    border-radius:7px;
+    cursor:pointer;
+}
+button:hover {opacity:.85}
+.refresh {background:var(--orange)}
+#message {color:var(--muted);font-size:13px;margin-top:12px}
+.menu-button {display:none}
+@media(max-width:800px) {
+    .sidebar {width:220px;z-index:5;transform:translateX(-100%);transition:.2s}
+    .sidebar.open {transform:translateX(0)}
+    .main {margin-left:0;width:100%;padding:20px}
+    .menu-button {display:block}
+}
+
+/* OLU-XMD OWNER DASHBOARD PREMIUM DESIGN V1 */
+
+:root {
+    --bg: #080e1d;
+    --panel: #111c32;
+    --panel2: #1a2945;
+    --blue: #3156d9;
+    --orange: #ff7a00;
+    --gold: #f7c843;
+    --text: #f4f6fc;
+    --muted: #a4b1c8;
+    --border: rgba(148, 163, 184, 0.17);
+}
+
+body {
+    background:
+        radial-gradient(ellipse at top right, rgba(49,86,217,.13), transparent 40%),
+        #080e1d;
+}
+
+.sidebar {
+    background: linear-gradient(180deg, #101a30 0%, #0b1325 100%);
+    border-right: 1px solid var(--border);
+    box-shadow: 8px 0 30px rgba(0,0,0,.15);
+    z-index: 20;
+}
+
+.brand {
+    font-size: 26px;
+    letter-spacing: 1px;
+}
+
+.owner-label {
+    padding-bottom: 18px;
+    border-bottom: 1px solid var(--border);
+}
+
+.nav-title {
+    letter-spacing: 1.2px;
+}
+
+.nav-item {
+    transition: background .2s ease, transform .2s ease;
+    border-left: 3px solid transparent;
+}
+
+.nav-item:hover {
+    background: rgba(49,86,217,.13);
+    transform: translateX(3px);
+}
+
+.nav-item.active {
+    background: linear-gradient(90deg, rgba(49,86,217,.25), rgba(49,86,217,.06));
+    border-left: 3px solid var(--orange);
+    color: white;
+}
+
+.main {
+    padding: clamp(18px, 3vw, 38px);
+    min-width: 0;
+}
+
+.topbar {
+    background: linear-gradient(120deg, #14213b, #111a2e);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 22px;
+    margin-bottom: 28px;
+    box-shadow: 0 12px 35px rgba(0,0,0,.15);
+}
+
+.topbar h1 {
+    font-size: clamp(22px, 3vw, 29px);
+    letter-spacing: -.5px;
+}
+
+.owner-badge {
+    background: rgba(247,200,67,.08);
+    font-weight: bold;
+    letter-spacing: .7px;
+    white-space: nowrap;
+}
+
+#dashboard > h2 {
+    font-size: 21px;
+    margin: 0 0 8px;
+}
+
+#dashboard > .subtitle {
+    line-height: 1.6;
+}
+
+.stats {
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 210px), 1fr));
+    gap: 18px;
+    margin: 25px 0;
+}
+
+#dashboard .card {
+    position: relative;
+    overflow: hidden;
+    min-height: 145px;
+    background: linear-gradient(145deg, #172641, #101a2e);
+    border: 1px solid var(--border);
+    border-radius: 15px;
+    padding: 23px;
+    box-shadow: 0 8px 24px rgba(0,0,0,.12);
+    transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease;
+}
+
+#dashboard .card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(90deg, var(--blue), var(--orange), var(--gold));
+    opacity: .9;
+}
+
+#dashboard .card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(247,200,67,.4);
+    box-shadow: 0 14px 30px rgba(0,0,0,.23);
+}
+
+#dashboard .card-label {
+    font-size: 13px;
+    letter-spacing: .2px;
+}
+
+#dashboard .card-value {
+    font-size: clamp(25px, 3vw, 32px);
+    margin-top: 16px;
+    overflow-wrap: anywhere;
+}
+
+#dashboard .card-note {
+    line-height: 1.5;
+}
+
+#dashboard .panel {
+    background: linear-gradient(145deg, #172641, #101a2e);
+    border: 1px solid var(--border);
+    border-radius: 15px;
+    padding: 25px;
+    box-shadow: 0 10px 30px rgba(0,0,0,.13);
+}
+
+#dashboard .panel h2 {
+    font-size: 18px;
+}
+
+#dashboard .status {
+    color: #4ade80;
+    font-weight: bold;
+}
+
+#dashboard button,
+button {
+    font-weight: bold;
+    transition: opacity .2s ease, transform .2s ease;
+}
+
+button:hover {
+    transform: translateY(-1px);
+}
+
+.refresh {
+    background: linear-gradient(100deg, #ff7a00, #e96800);
+}
+
+#message {
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+}
+
+.menu-button {
+    background: var(--panel2);
+    border: 1px solid var(--border);
+    color: var(--gold);
+    font-size: 20px;
+    width: 43px;
+    height: 40px;
+    padding: 0;
+    margin-bottom: 12px;
+    border-radius: 9px;
+}
+
+@media (max-width: 800px) {
+    .sidebar {
+        width: min(280px, 85vw);
+        z-index: 50;
+    }
+
+    .main {
+        width: 100%;
+        padding: 15px;
+    }
+
+    .topbar {
+        padding: 17px;
+        align-items: flex-start;
+    }
+
+    .owner-badge {
+        font-size: 10px;
+        padding: 8px 10px;
+    }
+
+    .stats {
+        grid-template-columns: repeat(auto-fit, minmax(min(100%, 145px), 1fr));
+        gap: 12px;
+    }
+
+    #dashboard .card {
+        padding: 17px;
+        min-height: 130px;
+    }
+
+    #dashboard .card-value {
+        font-size: 25px;
+    }
+
+    #dashboard .panel {
+        padding: 18px;
+    }
+}
+
+@media (max-width: 420px) {
+    .topbar {
+        flex-wrap: wrap;
+    }
+
+    .owner-badge {
+        margin-top: 5px;
+    }
+
+    .stats {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+/* OLU-XMD DASHBOARD RECENT ACTIVITY V1 */
+.dashboard-activity-panel {
+    margin-top: 22px;
+}
+.dashboard-activity-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    flex-wrap: wrap;
+    margin-bottom: 16px;
+}
+.dashboard-activity-heading h2 {
+    margin: 0;
+}
+.dashboard-activity-list {
+    display: grid;
+    gap: 12px;
+}
+.dashboard-activity-item {
+    padding: 15px 16px;
+    background: rgba(255,255,255,.035);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    min-width: 0;
+}
+.dashboard-activity-item h3 {
+    margin: 0 0 7px;
+    color: var(--text);
+    font-size: 14px;
+    overflow-wrap: anywhere;
+}
+.dashboard-activity-meta {
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+}
+.dashboard-activity-details {
+    margin-top: 8px;
+    color: var(--text);
+    font-size: 13px;
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+}
+.dashboard-activity-empty {
+    padding: 18px;
+    border: 1px dashed var(--border);
+    border-radius: 12px;
+    color: var(--muted);
+    line-height: 1.6;
+}
+.dashboard-activity-refresh {
+    padding: 10px 15px;
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    background: var(--panel2);
+    color: var(--text);
+    cursor: pointer;
+}
+.dashboard-activity-refresh:hover {
+    border-color: var(--gold);
+}
+</style>
+</head>
+<body>
+<div class="layout">
+
+<aside class="sidebar" id="sidebar">
+    <div class="brand">OLU<span>-XMD</span></div>
+    <div class="owner-label">OWNER CONTROL PANEL</div>
+
+    <div class="nav-title">Overview</div>
+    <a class="nav-item active" onclick="showSection('dashboard',this)">&#9638; Dashboard</a>
+    <a class="nav-item" href="/dashboard.html" onclick="window.location.assign('/dashboard.html'); return false;">&#8592; Main Dashboard</a>
+
+    <div class="nav-title">Management</div>
+    <a class="nav-item" onclick="showSection('customers',this)">&#128101; Customers</a>
+    <a class="nav-item" href="/custom-commands.html">&#128221; Custom Commands</a>
+    <a class="nav-item" onclick="showSection('coins',this)">&#9670; XMD Coin Management</a>
+    <a class="nav-item" onclick="showSection('coin-pricing',this)">&#9733; Global XMD Coin Pricing</a>
+    <a class="nav-item" onclick="showSection('hosting-packages',this)">&#128640; Hosting Packages</a>
+    <a class="nav-item" onclick="showSection('subscription-pricing',this)">&#9633; Subscription Pricing</a>
+    <a class="nav-item" onclick="showSection('staff',this)">&#128100; Staff Admins</a>
+
+    <div class="nav-title">Security</div>
+    <a class="nav-item" onclick="showSection('logs',this)">&#128274; Admin Activity Logs</a>
+    <a class="nav-item" href="#" onclick="ownerLogout(); return false;">&#128682; Owner Logout</a></aside>
+
+<main class="main">
+    <header class="topbar">
+        <div>
+            <button class="menu-button" onclick="toggleSidebar()">&#9776;</button>
+            <h1>Owner Dashboard</h1>
+            <div class="subtitle">Manage and monitor your OLU-XMD platform</div>
+        </div>
+        <div class="owner-badge"><img src="/images/olu-xmd-logo.png" alt="OLU-XMD logo" style="width:28px;height:28px;object-fit:contain;vertical-align:middle;margin-right:7px;">OWNER ACCESS</div>
+    </header>
+
+    <section class="section active" id="dashboard">
+        <h2>Platform Overview</h2>
+        <div class="subtitle">Live information from your database</div>
+
+        <div class="stats">
+            <div class="card">
+                <div class="card-label">Registered Customers</div>
+                <div class="card-value" id="users">0</div>
+                <div class="card-note">Total registered accounts</div>
+            </div>
+            <div class="card">
+                <div class="card-label">Active Subscriptions</div>
+                <div class="card-value" id="subscriptions">0</div>
+                <div class="card-note">Currently active and unexpired</div>
+            </div>
+            <div class="card">
+                <div class="card-label">Naira Wallet Balance</div>
+                <div class="card-value" id="wallet">&#8358;0.00</div>
+                <div class="card-note">Combined customer wallet balances</div>
+            </div>
+            <div class="card">
+                <div class="card-label">XMD Coin Balance</div>
+                <div class="card-value" id="totalXmdCoins">0</div>
+                <div class="card-note">Combined customer XMD Coins</div>
+            </div>
+            <div class="card">
+                <div class="card-label">Active Plans</div>
+                <div class="card-value" id="plans">0</div>
+                <div class="card-note">Available subscription plans</div>
+            </div>
+        </div>
+
+        <div class="panel">
+            <h2>Platform Status</h2>
+            <p class="status">&#10004; Owner dashboard connected</p>
+            <p id="lastUpdated" class="subtitle">Waiting for statistics...</p>
+            <button class="refresh" onclick="loadStats()">Refresh Statistics</button>
+            <div id="message"></div>
+        </div>
+    
+        <div class="panel dashboard-activity-panel">
+            <div class="dashboard-activity-heading">
+                <h2>Recent Admin Activity</h2>
+                <button class="dashboard-activity-refresh" onclick="loadDashboardActivity()">
+                    Refresh Activity
+                </button>
+            </div>
+            <p id="dashboardActivityMessage" class="subtitle">
+                Loading recent activity...
+            </p>
+            <div id="dashboardRecentActivity" class="dashboard-activity-list"></div>
+        </div></section>
+
+<section class="section" id="customers">
+    <div class="panel">
+        <h2>Customer Management</h2>
+        <p class="subtitle">Search and manage registered OLU-XMD customers.</p>
+
+        <div style="display:flex;gap:10px;margin:20px 0;flex-wrap:wrap;">
+            <input
+                type="text"
+                id="customerSearch"
+                placeholder="Search by customer name, email or ID..."
+                style="flex:1;min-width:220px;padding:12px;border-radius:8px;border:1px solid #334155;background:#0f172a;color:white;"
+            >
+            <button onclick="loadCustomers()" style="padding:12px 20px;border:0;border-radius:8px;cursor:pointer;">
+                Search
+            </button>
+        </div>
+
+        <p id="customerMessage" class="subtitle">Loading customers...</p>
+
+        <div style="overflow-x:auto;">
+            <table style="width:100%;border-collapse:collapse;min-width:850px;">
+                <thead>
+                    <tr>
+                        <th style="padding:12px;text-align:left;">ID</th>
+                        <th style="padding:12px;text-align:left;">Customer</th>
+                        <th style="padding:12px;text-align:left;">Naira Wallet</th>
+                        <th style="padding:12px;text-align:left;">XMD Coins</th>
+                        <th style="padding:12px;text-align:left;">Subscription</th>
+                        <th style="padding:12px;text-align:left;">Status</th>
+                        <th style="padding:12px;text-align:left;">Expiry</th>
+                        <th style="padding:12px;text-align:left;">Action</th>
+                    </tr>
+                </thead>
+                <tbody id="customerTableBody">
+                    <tr>
+                        <td colspan="8" style="padding:15px;">Loading...</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+    <div class="panel" id="customerProfilePanel" style="display:none;margin-top:20px;">
+        <h2>Customer Profile</h2>
+        <p id="customerProfileMessage" class="subtitle">Loading profile...</p>
+        <div id="customerProfileContent"></div>
+        <button type="button" onclick="closeCustomerProfile()" style="margin-top:15px;padding:10px 18px;cursor:pointer;">Close Profile</button>
+    </div>
+    <section class="section" id="coins">
+    <div class="panel">
+        <h2>XMD Coin Management</h2>
+        <p class="subtitle">Search customers, manage XMD Coin balances and inspect transaction history.</p>
+
+        <div style="display:flex;gap:10px;flex-wrap:wrap;margin:20px 0;">
+            <input id="coinCustomerSearch" type="search"
+                placeholder="Search customer name, email or ID"
+                style="flex:1;min-width:220px;padding:12px;border:1px solid #ccc;border-radius:8px;">
+            <button class="refresh" type="button" onclick="searchCoinCustomers()">Search Customers</button>
+        </div>
+
+        <p id="coinSearchMessage" class="subtitle">Search for a customer to begin.</p>
+
+        <div style="overflow-x:auto;">
+            <table style="width:100%;border-collapse:collapse;min-width:650px;text-align:left;">
+                <thead>
+                    <tr>
+                        <th style="padding:12px;border-bottom:1px solid #ddd;">Customer</th>
+                        <th style="padding:12px;border-bottom:1px solid #ddd;">Email</th>
+                        <th style="padding:12px;border-bottom:1px solid #ddd;">Current Coins</th>
+                        <th style="padding:12px;border-bottom:1px solid #ddd;">Action</th>
+                    </tr>
+                </thead>
+                <tbody id="coinCustomerResults">
+                    <tr><td colspan="4" style="padding:15px;">Search for a customer to display results.</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="panel" id="coinCustomerDetails" style="display:none;margin-top:20px;">
+        <h2>Customer XMD Coin Account</h2>
+        <p id="coinSelectedCustomer" class="subtitle"></p>
+        <div style="margin:15px 0;padding:18px;border-radius:10px;background:#f1f4fb;">
+            <div class="card-label">Available XMD Coins</div>
+            <div class="card-value" id="coinSelectedBalance">0</div>
+        </div>
+
+        <h3>Grant or Deduct XMD Coins</h3>
+        <label for="coinAdjustmentAmount">Coin Amount</label>
+        <input id="coinAdjustmentAmount" type="number" min="1" step="1"
+            placeholder="Enter a whole number of coins" style="display:block;width:100%;max-width:420px;padding:12px;margin:8px 0 16px;">
+
+        <label for="coinAdjustmentReason">Reason (required)</label>
+        <textarea id="coinAdjustmentReason" rows="3" maxlength="500"
+            placeholder="Explain why these coins are being granted or deducted"
+            style="display:block;width:100%;max-width:600px;padding:12px;margin:8px 0 16px;"></textarea>
+
+        <div style="display:flex;gap:10px;flex-wrap:wrap;">
+            <button class="refresh" id="coinGrantButton" type="button"
+                onclick="submitCoinAdjustment('owner_grant')">Grant XMD Coins</button>
+            <button class="refresh" id="coinDeductButton" type="button"
+                onclick="submitCoinAdjustment('owner_deduction')">Deduct XMD Coins</button>
+        </div>
+
+        <p id="coinAdjustmentMessage" class="subtitle" aria-live="polite"></p>
+
+        <h3 style="margin-top:28px;">XMD Coin Transaction History</h3>
+        <div style="overflow-x:auto;">
+            <table style="width:100%;border-collapse:collapse;min-width:850px;text-align:left;">
+                <thead>
+                    <tr>
+                        <th style="padding:12px;border-bottom:1px solid #ddd;">Date</th>
+                        <th style="padding:12px;border-bottom:1px solid #ddd;">Type</th>
+                        <th style="padding:12px;border-bottom:1px solid #ddd;">Amount</th>
+                        <th style="padding:12px;border-bottom:1px solid #ddd;">Status</th>
+                        <th style="padding:12px;border-bottom:1px solid #ddd;">Reference</th>
+                        <th style="padding:12px;border-bottom:1px solid #ddd;">Reason</th>
+                        <th style="padding:12px;border-bottom:1px solid #ddd;">Admin</th>
+                    </tr>
+                </thead>
+                <tbody id="coinTransactionBody">
+                    <tr><td colspan="7" style="padding:15px;">Select a customer to view transactions.</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+    <section class="section" id="coin-pricing">
+        <div class="panel">
+            <h2>Global XMD Coin Pricing</h2>
+            <p class="subtitle">
+                Set one USD master price for every country. Customer prices are automatically displayed in their local currency.
+            </p>
+
+            <p id="globalCoinPricingMessage" class="subtitle" aria-live="polite">
+                Loading global XMD Coin pricing...
+            </p>
+
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px;margin-top:20px;">
+                <div>
+                    <label for="globalCoinsPerPackage">Coins per package</label>
+                    <input
+                        id="globalCoinsPerPackage"
+                        type="number"
+                        min="1"
+                        step="1"
+                        value="50"
+                        style="width:100%;padding:12px;"
+                    >
+                </div>
+
+                <div>
+                    <label for="globalUsdPrice">Master price (USD)</label>
+                    <input
+                        id="globalUsdPrice"
+                        type="number"
+                        min="0.01"
+                        step="0.01"
+                        placeholder="Enter USD price"
+                        style="width:100%;padding:12px;"
+                    >
+                </div>
+            </div>
+
+            <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:18px;">
+                <button type="button" onclick="saveGlobalXmdCoinPricing()">
+                    Save USD Master Price
+                </button>
+
+                <button type="button" class="refresh" onclick="refreshXmdCoinRates()">
+                    Refresh Exchange Rates
+                </button>
+            </div>
+
+            <h3 style="margin-top:28px;">Automatic Local-Currency Price Preview</h3>
+            <p class="subtitle">
+                These are reference conversions from the USD master price. They are not payment settlement quotations.
+            </p>
+
+            <div style="overflow-x:auto;margin-top:15px;">
+                <table style="width:100%;border-collapse:collapse;min-width:650px;">
+                    <thead>
+                        <tr style="text-align:left;border-bottom:1px solid #334155;">
+                            <th style="padding:12px;">Country</th>
+                            <th style="padding:12px;">Currency</th>
+                            <th style="padding:12px;">Rate per USD</th>
+                            <th style="padding:12px;">Displayed Price</th>
+                            <th style="padding:12px;">Rate Date</th>
+                        </tr>
+                    </thead>
+                    <tbody id="globalCoinPreviewBody">
+                        <tr>
+                            <td colspan="5" style="padding:15px;">
+                                Exchange-rate previews will appear here.
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <p id="globalCoinRateInfo" class="subtitle" style="margin-top:15px;">
+                Exchange-rate information has not been loaded yet.
+            </p>
+
+            <p class="subtitle">
+                Nigeria, Ghana and South Africa are displayed in NGN, GHS and ZAR respectively. The United States is displayed in USD. Historical purchase prices and exchange rates will be preserved.
+            </p>
+        </div>
+    </section>
+    <section class="section" id="hosting-packages">
+        <div class="panel">
+            <h2>Combined Hosting Package Manager</h2>
+            <p class="subtitle">
+                Configure XMD Coins, CPU, RAM, storage, bot slots, duration and USD prices independently.
+            </p>
+            <p class="warning">
+                Packages are saved as drafts. Customer checkout and hosting activation remain disabled until production resource enforcement is ready.
+            </p>
+            <p id="hostingPackagesAdminMessage" role="status" aria-live="polite">
+                Loading hosting packages...
+            </p>
+            <div id="hostingPackagesAdminGrid"
+                 style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px;">
+            </div>
+        </div>
+    </section>
+    <section class="section" id="subscription-pricing">
+    <div class="panel">
+        <h2>Global USD Subscription Pricing</h2>
+
+        <p class="subtitle">
+            Set one master USD price for each subscription plan.
+            Customers will see the automatically converted price in their local currency:
+            NGN, GHS, ZAR or USD.
+        </p>
+
+        <p id="subscriptionUsdPricingMessage"
+           role="status"
+           aria-live="polite"
+           style="margin-top:18px;color:#cbd5e1;">
+            Global USD subscription pricing is loading...
+        </p>
+
+        <div id="subscriptionUsdPlansGrid"
+             style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px;margin-top:20px;">
+        </div>
+
+        <p class="subtitle" style="margin-top:22px;font-size:13px;">
+            Exchange-rate previews use the existing XMD exchange rates.
+            Subscription checkout and purchases remain disabled until payment
+            integration and premium access controls are implemented.
+        </p>
+    </div>
+</section>
+
+    <section class="section" id="staff">
+        <div class="panel">
+            <h2>Staff Admin Management</h2>
+            <p class="subtitle">Create staff administrators and manage their permissions.</p>
+            <p class="warning">Staff management tools are not yet connected.</p>
+        </div>
+    </section>
+
+    <section class="section" id="logs">
+    <div class="panel">
+        <h2>Admin Activity Logs</h2>
+        <p class="subtitle">Track Owner logins, logouts and important administrative actions.</p>
+
+        <button class="refresh" type="button" onclick="loadAdminActivityLogs()">
+            Refresh Activity Logs
+        </button>
+
+        <p id="auditMessage" class="subtitle">Open this section to load activity records.</p>
+
+        <div style="overflow-x:auto; margin-top:18px;">
+            <table style="width:100%; border-collapse:collapse; min-width:850px; text-align:left;">
+                <thead>
+                    <tr>
+                        <th style="padding:12px; border-bottom:1px solid #ddd;">Date &amp; Time</th>
+                        <th style="padding:12px; border-bottom:1px solid #ddd;">Administrator</th>
+                        <th style="padding:12px; border-bottom:1px solid #ddd;">Action</th>
+                        <th style="padding:12px; border-bottom:1px solid #ddd;">Affected Customer</th>
+                        <th style="padding:12px; border-bottom:1px solid #ddd;">Details</th>
+                    </tr>
+                </thead>
+                <tbody id="adminActivityBody">
+                    <tr>
+                        <td colspan="5" style="padding:16px;">No activity loaded yet.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+</main>
+</div>
+
+<script>
+// ==========================================
+// ==========================================
+// GLOBAL USD MASTER XMD COIN PRICING
+// ==========================================
+
+function escapeRegionalHTML(value) {
+    return String(value ?? "").replace(/[&<>"']/g, char => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#39;"
+    })[char]);
+}
+
+async function loadGlobalXmdCoinPricing() {
+    const message = document.getElementById("globalCoinPricingMessage");
+    const tbody = document.getElementById("globalCoinPreviewBody");
+    const rateInfo = document.getElementById("globalCoinRateInfo");
+
+    message.textContent = "Loading global USD pricing...";
+
+    try {
+        const response = await fetch("/api/admin/xmd-coin-master-pricing", {
+            credentials: "same-origin",
+            cache: "no-store"
+        });
+
+        if (response.status === 401 || response.status === 403) {
+            window.location.replace("/owner-login.html");
+            return;
+        }
+
+        const data = await response.json();
+
+        if (!response.ok || !data.success) {
+            throw new Error(data.message || "Unable to load global pricing.");
+        }
+
+        const master = data.master || {};
+
+        document.getElementById("globalCoinsPerPackage").value =
+            master.coinsPerPackage || 50;
+
+        document.getElementById("globalUsdPrice").value =
+            master.usdPrice === null || master.usdPrice === undefined
+                ? ""
+                : Number(master.usdPrice).toFixed(2);
+
+        const countryNames = {
+            NGN: "Nigeria",
+            GHS: "Ghana",
+            ZAR: "South Africa",
+            USD: "United States"
+        };
+
+        tbody.innerHTML = "";
+
+        (data.previews || []).forEach(preview => {
+            const row = document.createElement("tr");
+            row.style.borderBottom = "1px solid #334155";
+
+            const values = [
+                countryNames[preview.currencyCode] || preview.currencyCode,
+                preview.currencyCode,
+                preview.available
+                    ? "1 USD = " + Number(preview.ratePerUsd).toLocaleString("en", {
+                        maximumFractionDigits: 6
+                    }) + " " + preview.currencyCode
+                    : "Unavailable",
+                preview.formattedPrice || "Unavailable",
+                preview.rateDate || "Not available"
+            ];
+
+            values.forEach(value => {
+                const cell = document.createElement("td");
+                cell.style.padding = "12px";
+                cell.textContent = value;
+                row.appendChild(cell);
+            });
+
+            tbody.appendChild(row);
+        });
+
+        const rates = data.rates || [];
+        const dates = [...new Set(rates.map(rate => rate.rate_date))];
+
+        rateInfo.textContent = dates.length
+            ? "Exchange-rate source: Frankfurter. Retrieved rates dated: " + dates.join(", ")
+            : "Exchange rates have not yet been refreshed.";
+
+        message.textContent = master.usdPrice === null
+            ? "No USD master price has been saved yet. Enter a price and save it."
+            : "Global USD pricing loaded successfully.";
+
+    } catch (error) {
+        console.error("Global XMD Coin pricing error:", error);
+        message.textContent = error.message || "Unable to load pricing.";
+    }
+}
+
+async function saveGlobalXmdCoinPricing() {
+    const message = document.getElementById("globalCoinPricingMessage");
+
+    const coins = Number(
+        document.getElementById("globalCoinsPerPackage").value
+    );
+
+    const priceInput = document.getElementById("globalUsdPrice").value.trim();
+    const usdPrice = Number(priceInput);
+    const usdPriceMinorUnits = Math.round(usdPrice * 100);
+
+    if (!Number.isSafeInteger(coins) || coins < 1) {
+        message.textContent = "Enter a valid whole-number coin package size.";
+        return;
+    }
+
+    if (
+        !/^\d+(\.\d{1,2})?$/.test(priceInput) ||
+        !Number.isFinite(usdPrice) ||
+        usdPrice <= 0 ||
+        !Number.isSafeInteger(usdPriceMinorUnits)
+    ) {
+        message.textContent = "Enter a valid USD price with no more than two decimal places.";
+        return;
+    }
+
+    message.textContent = "Saving global USD master price...";
+
+    try {
+        const response = await fetch("/api/admin/xmd-coin-master-pricing", {
+            method: "PUT",
+            credentials: "same-origin",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                coinsPerPackage: coins,
+                usdPriceMinorUnits
+            })
+        });
+
+        if (response.status === 401 || response.status === 403) {
+            window.location.replace("/owner-login.html");
+            return;
+        }
+
+        const result = await response.json();
+
+        if (!response.ok || !result.success) {
+            throw new Error(result.message || "Unable to save master price.");
+        }
+
+        message.textContent = "USD master price saved successfully.";
+
+        await loadGlobalXmdCoinPricing();
+
+    } catch (error) {
+        console.error("Global XMD Coin pricing save error:", error);
+        message.textContent = error.message || "Unable to save master price.";
+    }
+}
+
+async function refreshXmdCoinRates() {
+    const message = document.getElementById("globalCoinPricingMessage");
+
+    message.textContent = "Refreshing exchange rates from Frankfurter...";
+
+    try {
+        const response = await fetch(
+            "/api/admin/xmd-coin-master-pricing/refresh-rates",
+            {
+                method: "POST",
+                credentials: "same-origin",
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            }
+        );
+
+        if (response.status === 401 || response.status === 403) {
+            window.location.replace("/owner-login.html");
+            return;
+        }
+
+        const result = await response.json();
+
+        if (!response.ok || !result.success) {
+            throw new Error(result.message || "Unable to refresh exchange rates.");
+        }
+
+        message.textContent =
+            "Exchange rates refreshed successfully. Saved " +
+            Number(result.ratesSaved) + " rates.";
+
+        await loadGlobalXmdCoinPricing();
+
+    } catch (error) {
+        console.error("Exchange-rate refresh error:", error);
+        message.textContent = error.message || "Unable to refresh exchange rates.";
+    }
+}
+function showSection(id,element) {
+    document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+    document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+if (id === 'customers') {
+    loadCustomers();
+}
+if (id === 'coin-pricing') {
+    loadGlobalXmdCoinPricing();
+}
+    if (id === 'subscription-pricing') {
+        loadSubscriptionUsdPricing();
+    }
+    element.classList.add('active');
+    if (id === 'coins') {
+        searchCoinCustomers();
+    }
+    if (id === 'logs') {
+        loadAdminActivityLogs();
+    }
+    document.getElementById('sidebar').classList.remove('open');
+}
+
+function toggleSidebar() {
+    document.getElementById('sidebar').classList.toggle('open');
+}
+
+async function loadStats() {
+    const message=document.getElementById('message');
+    message.textContent='Loading statistics...';
+
+    try {
+        const response=await fetch('/api/admin/dashboard/stats',{credentials:'same-origin'});
+        const data=await response.json();
+
+        if(!response.ok || !data.success) {
+            throw new Error(data.message || 'Unable to load dashboard statistics.');
+        }
+
+        const s=data.statistics;
+        document.getElementById('users').textContent=s.totalUsers;
+        document.getElementById('subscriptions').textContent=s.totalSubscriptions;
+        document.getElementById('wallet').textContent=
+            '\u20A6'+(s.totalWalletBalanceKobo/100).toLocaleString('en-NG',{minimumFractionDigits:2});
+        document.getElementById('totalXmdCoins').textContent=
+            Number(s.totalXmdCoins).toLocaleString();
+        document.getElementById('plans').textContent=s.totalPlans;
+
+        document.getElementById('lastUpdated').textContent=
+            'Last updated: '+new Date().toLocaleString();
+
+        message.textContent='Statistics loaded successfully.';
+    } catch(error) {
+        message.textContent=error.message;
+    }
+}
+
+loadStats();
+loadDashboardActivity();
+
+async function loadDashboardActivity() {
+    const message = document.getElementById("dashboardActivityMessage");
+    const container = document.getElementById("dashboardRecentActivity");
+
+    if (!message || !container) return;
+
+    message.textContent = "Loading recent administrative activity...";
+    container.replaceChildren();
+
+    try {
+        const response = await fetch("/api/admin/activity-logs", {
+            credentials: "same-origin",
+            cache: "no-store"
+        });
+
+        if (response.status === 401 || response.status === 403) {
+            window.location.replace("/owner-login.html");
+            return;
+        }
+
+        const data = await response.json();
+
+        if (!response.ok || !data.success) {
+            throw new Error(data.message || "Unable to load recent activity.");
+        }
+
+        const logs = Array.isArray(data.logs) ? data.logs.slice(0, 5) : [];
+
+        if (logs.length === 0) {
+            const empty = document.createElement("div");
+            empty.className = "dashboard-activity-empty";
+            empty.textContent = "No administrative activity has been recorded yet.";
+            container.appendChild(empty);
+            message.textContent = "No recent records available.";
+            return;
+        }
+
+        logs.forEach(log => {
+            const item = document.createElement("article");
+            item.className = "dashboard-activity-item";
+
+            const heading = document.createElement("h3");
+            heading.textContent = String(log.action || "Unknown action")
+                .replace(/_/g, " ")
+                .replace(/\b\w/g, character => character.toUpperCase());
+
+            const rawDate = String(log.created_at || "");
+            const parsedDate = rawDate
+                ? new Date(rawDate.includes("T") ? rawDate : rawDate.replace(" ", "T") + "Z")
+                : null;
+
+            const dateText = parsedDate && !Number.isNaN(parsedDate.getTime())
+                ? parsedDate.toLocaleString()
+                : "Date unavailable";
+
+            const adminText = [log.admin_name, log.admin_email]
+                .filter(Boolean).join(" | ") || "Unknown administrator";
+
+            const targetText = [log.target_user_name, log.target_user_email]
+                .filter(Boolean).join(" | ") || "No customer specified";
+
+            const meta = document.createElement("div");
+            meta.className = "dashboard-activity-meta";
+            meta.textContent = dateText + " | By: " + adminText + " | Customer: " + targetText;
+
+            const details = document.createElement("div");
+            details.className = "dashboard-activity-details";
+            details.textContent = String(log.details || "No additional details.");
+
+            item.appendChild(heading);
+            item.appendChild(meta);
+            item.appendChild(details);
+            container.appendChild(item);
+        });
+
+        message.textContent = "Showing the " + logs.length + " most recent activity record(s).";
+
+    } catch (error) {
+        message.textContent = error.message;
+
+        const empty = document.createElement("div");
+        empty.className = "dashboard-activity-empty";
+        empty.textContent = "Recent activity could not be loaded. Use Refresh Activity to try again.";
+        container.appendChild(empty);
+    }
+}
+async function loadAdminActivityLogs() {
+    const message = document.getElementById("auditMessage");
+    const tableBody = document.getElementById("adminActivityBody");
+
+    if (!message || !tableBody) return;
+
+    message.textContent = "Loading administrative activity...";
+    tableBody.replaceChildren();
+
+    try {
+        const response = await fetch("/api/admin/activity-logs", {
+            credentials: "same-origin",
+            cache: "no-store"
+        });
+
+        if (response.status === 401 || response.status === 403) {
+            window.location.replace("/owner-login.html");
+            return;
+        }
+
+        const data = await response.json();
+
+        if (!response.ok || !data.success) {
+            throw new Error(data.message || "Unable to load activity logs.");
+        }
+
+        const logs = Array.isArray(data.logs) ? data.logs : [];
+
+        if (logs.length === 0) {
+            const row = document.createElement("tr");
+            const cell = document.createElement("td");
+            cell.colSpan = 5;
+            cell.style.padding = "16px";
+            cell.textContent = "No administrative activity recorded yet.";
+            row.appendChild(cell);
+            tableBody.appendChild(row);
+        }
+
+        logs.forEach(log => {
+            const row = document.createElement("tr");
+
+            const dateValue = log.created_at
+                ? new Date(String(log.created_at).replace(" ", "T") + "Z").toLocaleString()
+                : "Date unavailable";
+
+            const adminValue = [log.admin_name, log.admin_email]
+                .filter(Boolean).join(" | ") || "Unknown administrator";
+
+            const actionValue = String(log.action || "Unknown")
+                .replace(/_/g, " ")
+                .replace(/\b\w/g, character => character.toUpperCase());
+
+            const targetValue = [log.target_user_name, log.target_user_email]
+                .filter(Boolean).join(" | ") || "No customer specified";
+
+            const values = [
+                dateValue,
+                adminValue,
+                actionValue,
+                targetValue,
+                log.details || "No additional details."
+            ];
+
+            values.forEach(value => {
+                const cell = document.createElement("td");
+                cell.style.padding = "12px";
+                cell.style.borderBottom = "1px solid #ddd";
+                cell.textContent = String(value);
+                row.appendChild(cell);
+            });
+
+            tableBody.appendChild(row);
+        });
+
+        message.textContent =
+            "Loaded " + logs.length + " recent activity record(s).";
+
+    } catch (error) {
+        message.textContent = error.message;
+    }
+}let selectedCoinCustomerId = null;
+
+// Search customers for XMD Coin management
+async function searchCoinCustomers() {
+    const searchInput = document.getElementById("coinCustomerSearch");
+    const message = document.getElementById("coinSearchMessage");
+    const tableBody = document.getElementById("coinCustomerResults");
+
+    message.textContent = "Searching customers...";
+    tableBody.replaceChildren();
+
+    try {
+        const response = await fetch(
+            "/api/admin/customers?search=" + encodeURIComponent(searchInput.value.trim()),
+            { credentials: "same-origin", cache: "no-store" }
+        );
+
+        if (response.status === 401 || response.status === 403) {
+            window.location.replace("/owner-login.html");
+            return;
+        }
+
+        const data = await response.json();
+
+        if (!response.ok || !data.success) {
+            throw new Error(data.message || "Customer search failed.");
+        }
+
+        if (!data.customers.length) {
+            const row = document.createElement("tr");
+            const cell = document.createElement("td");
+            cell.colSpan = 4;
+            cell.style.padding = "15px";
+            cell.textContent = "No matching customers found.";
+            row.appendChild(cell);
+            tableBody.appendChild(row);
+        }
+
+        data.customers.forEach(customer => {
+            const row = document.createElement("tr");
+
+            const values = [
+                customer.name,
+                customer.email,
+                Number(customer.xmd_coin_balance || 0).toLocaleString()
+            ];
+
+            values.forEach(value => {
+                const cell = document.createElement("td");
+                cell.style.padding = "12px";
+                cell.style.borderBottom = "1px solid #ddd";
+                cell.textContent = String(value ?? "ÃƒÂ¯Ã‚Â¿Ã‚Â½");
+                row.appendChild(cell);
+            });
+
+            const actionCell = document.createElement("td");
+            actionCell.style.padding = "12px";
+
+            const selectButton = document.createElement("button");
+            selectButton.type = "button";
+            selectButton.textContent = "Select Customer";
+            selectButton.addEventListener("click", () => {
+                loadCustomerCoins(customer.id);
+            });
+
+            actionCell.appendChild(selectButton);
+            row.appendChild(actionCell);
+            tableBody.appendChild(row);
+        });
+
+        message.textContent = "Found " + data.customers.length + " customer(s).";
+
+    } catch (error) {
+        message.textContent = error.message;
+    }
+}
+
+// Load selected customer's actual coin balance and history
+async function loadCustomerCoins(customerId) {
+    const details = document.getElementById("coinCustomerDetails");
+    const message = document.getElementById("coinAdjustmentMessage");
+    const tableBody = document.getElementById("coinTransactionBody");
+
+    message.textContent = "Loading customer coin account...";
+
+    try {
+        const response = await fetch(
+            "/api/admin/coins/" + encodeURIComponent(customerId),
+            { credentials: "same-origin", cache: "no-store" }
+        );
+
+        if (response.status === 401 || response.status === 403) {
+            window.location.replace("/owner-login.html");
+            return;
+        }
+
+        const data = await response.json();
+
+        if (!response.ok || !data.success) {
+            throw new Error(data.message || "Unable to load coin account.");
+        }
+
+        selectedCoinCustomerId = data.customer.id;
+
+        document.getElementById("coinSelectedCustomer").textContent =
+            data.customer.name + " ÃƒÂ¯Ã‚Â¿Ã‚Â½ " + data.customer.email +
+            " ÃƒÂ¯Ã‚Â¿Ã‚Â½ Customer ID: " + data.customer.id;
+
+        document.getElementById("coinSelectedBalance").textContent =
+            Number(data.balance).toLocaleString();
+
+        details.style.display = "block";
+        tableBody.replaceChildren();
+
+        if (!data.transactions.length) {
+            const row = document.createElement("tr");
+            const cell = document.createElement("td");
+            cell.colSpan = 7;
+            cell.style.padding = "15px";
+            cell.textContent = "No XMD Coin transactions recorded.";
+            row.appendChild(cell);
+            tableBody.appendChild(row);
+        }
+
+        data.transactions.forEach(transaction => {
+            const row = document.createElement("tr");
+
+            const date = transaction.created_at
+                ? new Date(
+                    String(transaction.created_at).replace(" ", "T") + "Z"
+                ).toLocaleString()
+                : "ÃƒÂ¯Ã‚Â¿Ã‚Â½";
+
+            const type = String(transaction.type || "unknown")
+                .replace(/_/g, " ");
+
+            const admin = [transaction.admin_name, transaction.admin_email]
+                .filter(Boolean).join(" ÃƒÂ¯Ã‚Â¿Ã‚Â½ ") || "ÃƒÂ¯Ã‚Â¿Ã‚Â½";
+
+            const values = [
+                date,
+                type,
+                Number(transaction.amount).toLocaleString(),
+                transaction.status || "ÃƒÂ¯Ã‚Â¿Ã‚Â½",
+                transaction.reference || "ÃƒÂ¯Ã‚Â¿Ã‚Â½",
+                transaction.reason || "ÃƒÂ¯Ã‚Â¿Ã‚Â½",
+                admin
+            ];
+
+            values.forEach(value => {
+                const cell = document.createElement("td");
+                cell.style.padding = "12px";
+                cell.style.borderBottom = "1px solid #ddd";
+                cell.textContent = String(value);
+                row.appendChild(cell);
+            });
+
+            tableBody.appendChild(row);
+        });
+
+        message.textContent = "Customer coin account loaded successfully.";
+
+    } catch (error) {
+        message.textContent = error.message;
+    }
+}
+
+// Submit a grant or deduction
+async function submitCoinAdjustment(type) {
+    if (!selectedCoinCustomerId) {
+        alert("Please select a customer first.");
+        return;
+    }
+
+    const amountInput = document.getElementById("coinAdjustmentAmount");
+    const reasonInput = document.getElementById("coinAdjustmentReason");
+    const message = document.getElementById("coinAdjustmentMessage");
+    const grantButton = document.getElementById("coinGrantButton");
+    const deductButton = document.getElementById("coinDeductButton");
+
+    const amount = Number(amountInput.value);
+    const reason = reasonInput.value.trim();
+
+    if (!Number.isSafeInteger(amount) || amount < 1) {
+        message.textContent = "Enter a valid whole-number coin amount.";
+        return;
+    }
+
+    if (!reason || reason.length > 500) {
+        message.textContent = "Please enter a reason of up to 500 characters.";
+        return;
+    }
+
+    const isGrant = type === "owner_grant";
+    const action = isGrant ? "grant" : "deduct";
+
+    if (!window.confirm(
+        "Confirm " + action + " of " + amount.toLocaleString() +
+        " XMD Coins for this customer?"
+    )) {
+        return;
+    }
+
+    grantButton.disabled = true;
+    deductButton.disabled = true;
+    message.textContent = "Processing coin adjustment...";
+
+    try {
+        const response = await fetch(
+            "/api/admin/coins/" + encodeURIComponent(selectedCoinCustomerId) +
+                "/" + action,
+            {
+                method: "POST",
+                credentials: "same-origin",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ amount, reason })
+            }
+        );
+
+        if (response.status === 401 || response.status === 403) {
+            window.location.replace("/owner-login.html");
+            return;
+        }
+
+        const data = await response.json();
+
+        if (!response.ok || !data.success) {
+            throw new Error(data.message || "Coin adjustment failed.");
+        }
+
+        amountInput.value = "";
+        reasonInput.value = "";
+
+        await loadCustomerCoins(selectedCoinCustomerId);
+
+        message.textContent =
+            data.message + " New balance: " +
+            Number(data.adjustment.newBalance).toLocaleString() + " XMD Coins.";
+
+    } catch (error) {
+        message.textContent = error.message;
+    } finally {
+        grantButton.disabled = false;
+        deductButton.disabled = false;
+    }
+}
+// CUSTOMER MANAGEMENT
+async function loadCustomers() {
+    const searchInput = document.getElementById("customerSearch");
+    const message = document.getElementById("customerMessage");
+    const tableBody = document.getElementById("customerTableBody");
+
+    if (!searchInput || !message || !tableBody) return;
+
+    const search = searchInput.value.trim();
+
+    message.textContent = "Loading customers...";
+    tableBody.replaceChildren();
+
+    try {
+        const response = await fetch(
+            "/api/admin/customers?search=" + encodeURIComponent(search),
+            { credentials: "same-origin" }
+        );
+
+        const data = await response.json();
+
+        if (!response.ok || !data.success) {
+            throw new Error(data.message || "Unable to load customers.");
+        }
+
+        if (!data.customers.length) {
+            message.textContent = "No customers found.";
+            return;
+        }
+
+        message.textContent = data.total + " customer(s) found.";
+
+        data.customers.forEach(customer => {
+            const row = document.createElement("tr");
+
+            const values = [
+                customer.id,
+                customer.name || "Not provided",
+                "\u20A6" + (Number(customer.wallet_balance_kobo || 0) / 100).toLocaleString("en-NG", {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2
+                }),
+                Number(customer.xmd_coin_balance || 0).toLocaleString(),
+                customer.subscription_plan || "No subscription",
+                customer.subscription_status || "None",
+                customer.subscription_expires_at
+                    ? new Date(customer.subscription_expires_at).toLocaleString("en-NG")
+                    : "N/A"
+            ];
+
+            values.forEach(value => {
+                const cell = document.createElement("td");
+                cell.style.padding = "12px";
+                cell.textContent = String(value);
+                row.appendChild(cell);
+            });
+
+            const actionCell = document.createElement("td");
+            actionCell.style.padding = "12px";
+
+            const profileButton = document.createElement("button");
+            profileButton.textContent = "View Profile";
+            profileButton.style.padding = "8px 12px";
+            profileButton.style.cursor = "pointer";
+            profileButton.addEventListener("click", () => {
+                loadCustomerProfile(customer.id);
+            });
+
+            actionCell.appendChild(profileButton);
+            row.appendChild(actionCell);
+            row.style.borderBottom = "1px solid #334155";
+            tableBody.appendChild(row);
+        });
+
+    } catch (error) {
+        console.error("Customer loading error:", error);
+        message.textContent = error.message;
+    }
+}
+
+async function loadCustomerProfile(customerId) {
+    const panel = document.getElementById("customerProfilePanel");
+    const message = document.getElementById("customerProfileMessage");
+    const content = document.getElementById("customerProfileContent");
+
+    if (!panel || !message || !content) return;
+
+    panel.style.display = "block";
+    message.textContent = "Loading customer profile...";
+    content.replaceChildren();
+    panel.scrollIntoView({ behavior: "smooth", block: "start" });
+
+    const formatDate = value => {
+        if (!value) return "N/A";
+        const date = new Date(value);
+        return Number.isNaN(date.getTime()) ? String(value) : date.toLocaleString("en-NG");
+    };
+
+    const formatNaira = kobo =>
+        "\u20A6" + (Number(kobo || 0) / 100).toLocaleString("en-NG", {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+        });
+
+    const makeSection = () => {
+        const section = document.createElement("div");
+        section.style.display = "none";
+        section.style.paddingTop = "18px";
+        return section;
+    };
+
+    const addHeading = (target, text) => {
+        const heading = document.createElement("h3");
+        heading.textContent = text;
+        heading.style.margin = "8px 0 16px";
+        target.appendChild(heading);
+    };
+
+    const addDetail = (target, label, value) => {
+        const item = document.createElement("p");
+        item.style.margin = "10px 0";
+        const strong = document.createElement("strong");
+        strong.textContent = label + ": ";
+        item.appendChild(strong);
+        item.appendChild(document.createTextNode(String(value ?? "N/A")));
+        target.appendChild(item);
+    };
+
+    const addTable = (target, headers, rows, emptyMessage) => {
+        if (!rows || !rows.length) {
+            const empty = document.createElement("p");
+            empty.textContent = emptyMessage;
+            empty.style.color = "#9aa8c0";
+            target.appendChild(empty);
+            return;
+        }
+
+        const wrapper = document.createElement("div");
+        wrapper.style.overflowX = "auto";
+        const table = document.createElement("table");
+        table.style.width = "100%";
+        table.style.borderCollapse = "collapse";
+        table.style.minWidth = "650px";
+
+        const thead = document.createElement("thead");
+        const headerRow = document.createElement("tr");
+        headers.forEach(label => {
+            const th = document.createElement("th");
+            th.textContent = label;
+            th.style.padding = "11px 10px";
+            th.style.textAlign = "left";
+            th.style.borderBottom = "1px solid #334155";
+            th.style.color = "#f7c843";
+            headerRow.appendChild(th);
+        });
+        thead.appendChild(headerRow);
+        table.appendChild(thead);
+
+        const tbody = document.createElement("tbody");
+        rows.forEach(values => {
+            const row = document.createElement("tr");
+            values.forEach(value => {
+                const cell = document.createElement("td");
+                cell.textContent = String(value ?? "N/A");
+                cell.style.padding = "10px";
+                cell.style.borderBottom = "1px solid #334155";
+                row.appendChild(cell);
+            });
+            tbody.appendChild(row);
+        });
+        table.appendChild(tbody);
+        wrapper.appendChild(table);
+        target.appendChild(wrapper);
+    };
+
+    try {
+        const response = await fetch(
+            "/api/admin/customers/" + encodeURIComponent(customerId) + "/profile",
+            { credentials: "same-origin" }
+        );
+        const data = await response.json();
+
+        if (!response.ok || !data.success) {
+            throw new Error(data.message || "Unable to load customer profile.");
+        }
+
+        const customer = data.customer;
+        const wallet = data.wallet || { balanceKobo: 0, transactions: [] };
+        const coins = data.xmdCoins || { balance: 0, transactions: [] };
+        const subscriptions = data.subscriptions || [];
+
+        const tabs = [
+            ["overview", "Overview"],
+            ["wallet", "Naira Wallet"],
+            ["coins", "XMD Coins"],
+            ["subscriptions", "Subscriptions"],
+            ["activity", "Activity"]
+        ];
+
+        const tabBar = document.createElement("div");
+        tabBar.style.display = "flex";
+        tabBar.style.flexWrap = "wrap";
+        tabBar.style.gap = "8px";
+        tabBar.style.borderBottom = "1px solid #293650";
+        tabBar.style.paddingBottom = "12px";
+
+        const panels = {};
+        const buttons = {};
+
+        tabs.forEach(([id, label]) => {
+            const button = document.createElement("button");
+            button.type = "button";
+            button.textContent = label;
+            button.style.background = id === "overview" ? "#ff7a00" : "#1b2740";
+            button.style.padding = "10px 14px";
+            button.style.borderRadius = "7px";
+            button.addEventListener("click", () => {
+                tabs.forEach(([tabId]) => {
+                    panels[tabId].style.display = tabId === id ? "block" : "none";
+                    buttons[tabId].style.background = tabId === id ? "#ff7a00" : "#1b2740";
+                    buttons[tabId].style.borderBottom = tabId === id ? "3px solid #f7c843" : "3px solid transparent";
+                });
+            });
+            button.style.borderBottom = id === "overview" ? "3px solid #f7c843" : "3px solid transparent";
+            buttons[id] = button;
+            tabBar.appendChild(button);
+
+            panels[id] = makeSection();
+            content.appendChild(panels[id]);
+        });
+
+        content.insertBefore(tabBar, content.firstChild);
+
+        const overview = panels.overview;
+        addHeading(overview, (customer.name || "Customer") + " ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â Account Overview");
+        addDetail(overview, "Customer ID", customer.id);
+        addDetail(overview, "Name", customer.name);
+        addDetail(overview, "Email", customer.email);
+        addDetail(overview, "Country", customer.country_code || "N/A");
+        addDetail(overview, "Currency", customer.currency_code || "N/A");
+        addDetail(overview, "Account created", formatDate(customer.created_at));
+        addHeading(overview, "Account Summary");
+        addDetail(overview, "Naira Wallet balance", formatNaira(wallet.balanceKobo));
+        addDetail(overview, "XMD Coin balance", Number(coins.balance || 0).toLocaleString("en-NG"));
+        const activeSubscription = subscriptions.find(item =>
+            String(item.status || "").toLowerCase() === "active"
+        );
+        addDetail(overview, "Current subscription", activeSubscription ? activeSubscription.plan_name : "No active subscription");
+        if (activeSubscription) {
+            addDetail(overview, "Subscription expiry", formatDate(activeSubscription.expires_at));
+        }
+
+        const walletPanel = panels.wallet;
+        addHeading(walletPanel, "Naira Wallet");
+        addDetail(walletPanel, "Wallet balance", formatNaira(wallet.balanceKobo));
+        const walletRows = (wallet.transactions || []).map(item => [
+            item.type, formatNaira(item.amount), item.reference, item.status, formatDate(item.created_at)
+        ]);
+        addTable(walletPanel, ["Type", "Amount", "Reference", "Status", "Date"], walletRows, "No wallet transactions recorded.");
+
+        const coinPanel = panels.coins;
+        addHeading(coinPanel, "XMD Coin Account");
+        addDetail(coinPanel, "XMD Coin balance", Number(coins.balance || 0).toLocaleString("en-NG"));
+        const coinRows = (coins.transactions || []).map(item => [
+            item.type, item.amount, item.reference, item.status, item.reason,
+            item.currency_code || "N/A", item.purchase_amount_minor_units ?? "N/A", formatDate(item.created_at)
+        ]);
+        addTable(coinPanel, ["Type", "Coins", "Reference", "Status", "Reason", "Currency", "Purchase amount (minor units)", "Date"], coinRows, "No XMD Coin transactions recorded.");
+
+        const subscriptionPanel = panels.subscriptions;
+        addHeading(subscriptionPanel, "Subscription History");
+        const subscriptionRows = subscriptions.map(item => [
+            item.plan_name, item.plan_code, item.status, formatDate(item.starts_at),
+            formatDate(item.expires_at), item.payment_reference, item.payment_status,
+            formatNaira(item.payment_amount_kobo), formatDate(item.payment_verified_at)
+        ]);
+        addTable(subscriptionPanel, ["Plan", "Code", "Subscription status", "Starts", "Expires", "Payment reference", "Payment status", "Payment amount", "Verified at"], subscriptionRows, "No subscription history recorded.");
+
+        const activityPanel = panels.activity;
+        addHeading(activityPanel, "Account Activity");
+        addDetail(activityPanel, "Account created", formatDate(customer.created_at));
+        const note = document.createElement("p");
+        note.textContent = "Detailed login history and WhatsApp connection activity are not currently recorded by the system.";
+        note.style.color = "#9aa8c0";
+        note.style.lineHeight = "1.6";
+        activityPanel.appendChild(note);
+
+        overview.style.display = "block";
+        message.textContent = "Customer profile loaded successfully. All information is read-only.";
+
+    } catch (error) {
+        console.error("Customer profile loading error:", error);
+        message.textContent = error.message;
+    }
+}function closeCustomerProfile() {
+    const panel = document.getElementById("customerProfilePanel");
+    const content = document.getElementById("customerProfileContent");
+
+    if (panel) panel.style.display = "none";
+    if (content) content.replaceChildren();
+}
+// Search when Enter is pressed
+document.addEventListener("DOMContentLoaded", () => {
+    const searchInput = document.getElementById("customerSearch");
+
+    if (searchInput) {
+        searchInput.addEventListener("keydown", event => {
+            if (event.key === "Enter") {
+                loadCustomers();
+            }
+        });
+    }
+});
+(function () {
+    const idleLimit = 15 * 60 * 1000;
+    let lastActivity = Date.now();
+    let lastHeartbeat = Date.now();
+    let loggingOut = false;
+
+    function recordActivity() {
+        lastActivity = Date.now();
+    }
+
+    ["click", "keydown", "mousemove", "touchstart", "scroll"].forEach(eventName => {
+        document.addEventListener(eventName, recordActivity, { passive: true });
+    });
+
+    window.ownerLogout = async function () {
+        if (loggingOut) return;
+        loggingOut = true;
+
+        try {
+            await fetch("/api/logout", {
+                method: "POST",
+                credentials: "same-origin"
+            });
+        } catch (error) {
+            console.error("Owner logout request failed:", error);
+        }
+
+        window.location.replace("/owner-login.html");
+    };
+
+    setInterval(async () => {
+        const now = Date.now();
+
+        if (now - lastActivity >= idleLimit) {
+            await window.ownerLogout();
+            return;
+        }
+
+        if (now - lastActivity < 60000 && now - lastHeartbeat >= 60000) {
+            lastHeartbeat = now;
+
+            try {
+                const response = await fetch("/api/admin/check", {
+                    credentials: "same-origin",
+                    cache: "no-store"
+                });
+
+                if (!response.ok) {
+                    window.location.replace("/owner-login.html");
+                }
+            } catch (error) {
+                console.error("Owner session check failed:", error);
+            }
+        }
+    }, 15000);
+})();
+</script>
+<script src="hosting-packages-admin.js"></script>
+<script src="subscription-pricing-admin.js"></script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+

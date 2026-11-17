@@ -3,31 +3,73 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#132563">
     <title>Login | OLU-XMD</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="auth.css">
 </head>
-<body>
 
-    <main class="main">
-        <section class="deploy">
-            <h2>Welcome Back</h2>
-            <p>Login to your OLU-XMD account.</p>
+<body class="auth-page">
 
-            <form id="loginForm">
-                <label>Email Address</label>
-                <input type="email" id="email" required>
+    <main class="auth-main">
+        <section class="auth-card">
 
-                <br><br>
+            <div class="auth-brand">
+                <div class="auth-logo">OLU<span>-XMD</span></div>
+                <div class="auth-tagline">WhatsApp Automation Platform</div>
+            </div>
 
-                <label>Password</label>
-                <input type="password" id="password" required>
+            <h1>Welcome Back</h1>
+            <p class="auth-description">
+                Sign in to manage your WhatsApp bot and account.
+            </p>
 
-                <br><br>
+            <p id="serverStatus" class="auth-server-status" role="status">
+                Checking server...
+            </p>
 
-                <button type="submit">Login</button>
+            
+            <div class="auth-google-section">
+                <div id="googleSignInButton" class="google-signin-button"></div>
+                <div class="auth-divider">OR CONTINUE WITH EMAIL</div>
+            </div><form id="loginForm" class="auth-form">
+
+                <label for="email">Email Address</label>
+                <input
+                    type="email"
+                    id="email"
+                    placeholder="Enter your email address"
+                    autocomplete="username"
+                    required
+                >
+
+                <label for="password">Password</label>
+                <input
+                    type="password"
+                    id="password"
+                    placeholder="Enter your password"
+                    autocomplete="current-password"
+                    required
+                >
+
+                <button type="submit" class="auth-submit">
+                    Login to Your Account
+                </button>
+
             </form>
 
-            <p id="message"></p>
+            <p id="message" class="auth-message" role="status" aria-live="polite"></p>
+            <div id="googleAuthExtra"></div>
+
+            <div class="auth-links">
+                Don't have an account?
+                <a href="register.html">Create an Account</a>
+            </div>
+
+            <p class="auth-security-note">
+                Secure access to your OLU-XMD account.
+            </p>
+
         </section>
     </main>
 
@@ -36,7 +78,11 @@
             event.preventDefault();
 
             const message = document.getElementById("message");
-            message.textContent = "Logging in...";
+            const button = this.querySelector('button[type="submit"]');
+
+            message.textContent = "Signing in...";
+            button.disabled = true;
+            button.textContent = "Signing In...";
 
             try {
                 const response = await fetch("/api/login", {
@@ -45,23 +91,56 @@
                         "Content-Type": "application/json"
                     },
                     body: JSON.stringify({
-                        email: document.getElementById("email").value,
+                        email: document.getElementById("email").value.trim(),
                         password: document.getElementById("password").value
                     })
                 });
 
                 const result = await response.json();
-                message.textContent = result.message;
 
                 if (result.success) {
-                    window.location.href = "index.html";
+                    message.textContent =
+                        result.message || "Login successful. Opening your dashboard...";
+
+                    window.location.href = "/dashboard.html";
+                    return;
                 }
 
+                message.textContent =
+                    result.message || "Login failed. Please check your details.";
+
             } catch (error) {
-                message.textContent = "Unable to connect to the server.";
+                message.textContent = "Unable to connect to the server. Please try again.";
+            } finally {
+                button.disabled = false;
+                button.textContent = "Login to Your Account";
             }
         });
+
+        async function loadServerStatus() {
+            const status = document.getElementById("serverStatus");
+
+            try {
+                const response = await fetch("/api/server/status", {
+                    cache: "no-store"
+                });
+
+                const result = await response.json();
+
+                status.textContent =
+                    response.ok && result.status === "online"
+                        ? "● Server Online"
+                        : "● Server Offline";
+
+            } catch (error) {
+                status.textContent = "● Server Offline";
+            }
+        }
+
+        loadServerStatus();
+        setInterval(loadServerStatus, 5000);
     </script>
 
-</body>
+    <script src="google-auth.js"></script></body>
 </html>
+

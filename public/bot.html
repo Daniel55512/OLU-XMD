@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -10,75 +10,82 @@
 
     <aside class="sidebar">
         <div class="logo">OLU<span>-XMD</span></div>
-        <a href="index.html">Dashboard</a>
-        <a href="bot.html" class="active">My Bot</a>
-        <a href="#">Deployments</a>
+        <a href="/dashboard.html">Dashboard</a>
+<a href="bot.html" class="active">My Bot</a>
+<a href="subscription.html">My Subscription</a>
+<a href="#">Deployments</a>
         <a href="#">Commands</a>
         <a href="#">Settings</a>
     </aside>
 
     <main class="main">
+<button
+    type="button"
+    id="desktopSidebarToggle"
+    class="desktop-sidebar-toggle"
+    aria-label="Hide navigation"
+    aria-expanded="true"
+    title="Hide sidebar"
+>
+    â€¹
+</button>
+        <header class="header inner-page-header">
+    <div class="inner-page-heading">
+        <a class="inner-back-link"
+           href="/dashboard.html"
+           aria-label="Go back"
+           title="Go back"
+           onclick="if (document.referrer && new URL(document.referrer).origin === window.location.origin) { window.history.back(); return false; }">
+            <span aria-hidden="true">&larr;</span>
+        </a>
 
-        <header class="header">
-            <div>
-                <h1>My WhatsApp Bot</h1>
-                <p>Manage your WhatsApp automation.</p>
-            </div>
+        <div class="inner-page-title">
+            <h1>My WhatsApp Bot</h1>
+            <p>Manage your WhatsApp automation.</p>
+        </div>
+    </div>
 
-            <div class="status">● Disconnected</div>
-        </header>
+    <div class="status" id="botHeaderStatus">Checking...</div>
+</header>
 
         <section class="bot-overview">
 
             <div class="bot-card">
                 <h3>BOT STATUS</h3>
-                <strong>Disconnected</strong>
+              <strong id="botStatus">Checking...</strong>
             </div>
 
             <div class="bot-card">
                 <h3>CONNECTED NUMBER</h3>
-                <strong>Not connected</strong>
+                <strong id="connectedNumber">Checking...</strong>
             </div>
 
             <div class="bot-card">
                 <h3>SUBSCRIPTION</h3>
-                <strong>Not started</strong>
+               <strong id="botSubscription">Checking...</strong>
             </div>
 
         </section>
 
         <section class="bot-connect">
 
-            <h2>Connect Your WhatsApp</h2>
+    <h2>WhatsApp Connection</h2>
 
-            <p>
-                Link your WhatsApp account using your phone number
-                and a secure pairing code.
-            </p>
+    <p>
+        Manage your existing WhatsApp connection.
+    </p>
 
-            <label for="phone">WhatsApp phone number</label>
+    <button type="button" id="reconnectWhatsAppBtn">
+        Reconnect Saved WhatsApp
+    </button>
 
-            <input
-                type="tel"
-                id="phone"
-                placeholder="234XXXXXXXXXX"
-            >
+    <p id="connectionMessage" class="bot-notice">
+        Your saved WhatsApp session will be used.
+    </p>
 
-            <button type="button" disabled>
-                Generate Pairing Code
-            </button>
-
-            <div class="bot-notice">
-                <p>
-                    <strong>Coming soon:</strong>
-                    WhatsApp pairing will be available when
-                    the connection engine is ready.
-                </p>
-            </div>
-
-        </section>
+</section>
 
     </main>
-
+<script src="script.js"></script>
 </body>
 </html>

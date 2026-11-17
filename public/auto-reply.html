@@ -1,0 +1,411 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OLU-XMD | Auto Reply</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+/* OLU-XMD AUTO REPLY PREMIUM DESIGN V1 */
+
+.auto-card {
+    width: 100%;
+    min-width: 0;
+    padding: 26px !important;
+    margin-bottom: 22px !important;
+    border: 1px solid #465AA8 !important;
+    border-radius: 20px !important;
+    background: linear-gradient(145deg, #172052, #293879) !important;
+    color: #FFFFFF !important;
+    box-shadow: 0 10px 28px rgba(0,0,0,.17);
+}
+
+.auto-card h2 {
+    margin-bottom: 10px !important;
+    color: #F7C843 !important;
+    font-size: 19px !important;
+    font-weight: 900 !important;
+}
+
+.auto-description {
+    margin-bottom: 20px !important;
+    color: #DCE4FF !important;
+    font-size: 13px !important;
+    line-height: 1.7;
+}
+
+.auto-toggle-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+}
+
+.auto-toggle-row > div {
+    flex: 1;
+    min-width: 0;
+}
+
+#autoStatus {
+    display: inline-flex;
+    align-items: center;
+    margin-top: 12px;
+    padding: 7px 15px;
+    border: 1px solid rgba(247,200,67,.35);
+    border-radius: 30px;
+    background: rgba(247,200,67,.12);
+    color: #F7C843 !important;
+    font-size: 13px;
+    font-weight: 900;
+}
+
+.auto-toggle {
+    flex: 0 0 58px;
+    width: 58px !important;
+    height: 32px !important;
+    padding: 0 !important;
+    position: relative;
+    appearance: none;
+    -webkit-appearance: none;
+    border: 1px solid rgba(255,255,255,.2) !important;
+    border-radius: 30px;
+    background: #64748B !important;
+    cursor: pointer;
+    transition: background .25s ease;
+}
+
+.auto-toggle:checked {
+    background: #16834D !important;
+}
+
+.auto-toggle::before {
+    content: "";
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: #FFFFFF;
+    box-shadow: 0 2px 5px rgba(0,0,0,.25);
+    transition: transform .25s ease;
+}
+
+.auto-toggle:checked::before {
+    transform: translateX(26px);
+}
+
+.auto-toggle:focus-visible {
+    outline: 2px solid #F7C843;
+    outline-offset: 4px;
+}
+
+.auto-label {
+    display: block;
+    margin: 17px 0 8px;
+    color: #F7C843 !important;
+    font-size: 13px;
+    font-weight: 800;
+}
+
+.auto-input {
+    display: block;
+    width: 100% !important;
+    min-width: 0;
+    padding: 14px !important;
+    border: 1px solid #5369A8 !important;
+    border-radius: 11px !important;
+    background: #132563 !important;
+    color: #FFFFFF !important;
+    font-family: inherit;
+    font-size: 14px !important;
+    outline: none;
+    box-sizing: border-box;
+    transition: border-color .2s ease, box-shadow .2s ease;
+}
+
+.auto-input::placeholder {
+    color: #AEBBE5 !important;
+    opacity: .8;
+}
+
+.auto-input:focus {
+    border-color: #F7C843 !important;
+    box-shadow: 0 0 0 3px rgba(247,200,67,.12);
+}
+
+textarea.auto-input {
+    min-height: 135px;
+    resize: vertical;
+    line-height: 1.7;
+}
+
+.auto-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 45px;
+    padding: 12px 23px !important;
+    margin-top: 17px !important;
+    border: 0 !important;
+    border-radius: 10px !important;
+    background: #F7C843 !important;
+    color: #132563 !important;
+    font-size: 13px !important;
+    font-weight: 900 !important;
+    cursor: pointer;
+    transition: transform .2s ease, background .2s ease;
+}
+
+.auto-button:hover {
+    background: #FFFFFF !important;
+    color: #132563 !important;
+    transform: translateY(-2px);
+}
+
+.auto-button:disabled {
+    opacity: .6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.auto-notice {
+    padding: 12px 15px;
+    margin-top: 15px !important;
+    border: 1px solid rgba(247,200,67,.2);
+    border-radius: 10px;
+    background: rgba(247,200,67,.08);
+    color: #FDE9B0 !important;
+    font-size: 12px !important;
+    line-height: 1.7;
+}
+
+.keyword-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    min-width: 0;
+    padding: 16px;
+    margin-top: 13px;
+    border: 1px solid rgba(255,255,255,.15);
+    border-radius: 13px;
+    background: rgba(255,255,255,.06);
+}
+
+.keyword-item > div {
+    flex: 1;
+    min-width: 0;
+}
+
+.keyword-item strong {
+    color: #F7C843 !important;
+    font-size: 14px;
+    overflow-wrap: anywhere;
+}
+
+.keyword-item p {
+    margin-top: 7px;
+    color: #E1E7FF !important;
+    font-size: 13px;
+    line-height: 1.7;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+}
+
+.delete-keyword {
+    flex-shrink: 0;
+    padding: 9px 13px;
+    border: 1px solid rgba(248,113,113,.3);
+    border-radius: 9px;
+    background: rgba(220,38,38,.17);
+    color: #FCA5A5 !important;
+    font-size: 12px;
+    font-weight: 800;
+    cursor: pointer;
+}
+
+.delete-keyword:hover {
+    background: #DC2626;
+    color: #FFFFFF !important;
+}
+
+.premium-lock {
+    padding: 24px;
+    margin-bottom: 22px;
+    border: 1px solid #F7C843;
+    border-radius: 17px;
+    background: linear-gradient(135deg, #172052, #49327F);
+    color: #FFFFFF !important;
+}
+
+.premium-lock h3 {
+    margin-bottom: 10px;
+    color: #F7C843 !important;
+    font-size: 19px;
+}
+
+.premium-lock p {
+    margin-bottom: 15px;
+    color: #E1E7FF !important;
+    line-height: 1.7;
+}
+
+.premium-lock a {
+    display: inline-block;
+    padding: 11px 17px;
+    border-radius: 9px;
+    background: #F7C843;
+    color: #132563 !important;
+    font-size: 13px;
+    font-weight: 900;
+}
+
+#keywordList {
+    width: 100%;
+    margin-top: 12px;
+}
+
+@media (max-width: 600px) {
+    .auto-card {
+        padding: 19px !important;
+        margin-bottom: 16px !important;
+    }
+
+    .auto-card h2 {
+        font-size: 17px !important;
+    }
+
+    .auto-toggle-row {
+        align-items: center;
+        gap: 12px;
+    }
+
+    .auto-toggle {
+        flex-basis: 52px;
+        width: 52px !important;
+    }
+
+    .auto-toggle:checked::before {
+        transform: translateX(20px);
+    }
+
+    .auto-button {
+        width: 100%;
+    }
+
+    .keyword-item {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .delete-keyword {
+        width: 100%;
+    }
+
+    .premium-lock {
+        padding: 19px;
+    }
+}
+</style>
+</head>
+<body>
+
+<aside class="sidebar">
+    <div class="logo">OLU<span>-XMD</span></div>
+    <a href="/dashboard.html">Dashboard</a>
+    <a href="bot.html">My Bot</a>
+    <a href="auto-reply.html" class="active">Auto Reply</a>
+    <a href="subscription.html">My Subscription</a>
+    <a href="#">Deployments</a>
+    <a href="#">Commands</a>
+    <a href="#">Settings</a>
+</aside>
+
+<main class="main">
+<button
+    type="button"
+    id="desktopSidebarToggle"
+    class="desktop-sidebar-toggle"
+    aria-label="Hide navigation"
+    aria-expanded="true"
+    title="Hide sidebar"
+>
+    â€¹
+</button>
+    <header class="header inner-page-header">
+    <div class="inner-page-heading">
+        <a class="inner-back-link"
+           href="/dashboard.html"
+           aria-label="Go back"
+           title="Go back"
+           onclick="if (document.referrer && new URL(document.referrer).origin === window.location.origin) { window.history.back(); return false; }">
+            <span aria-hidden="true">&larr;</span>
+        </a>
+
+        <div class="inner-page-title">
+            <h1>Auto Reply</h1>
+            <p>Automatically respond to incoming private messages.</p>
+        </div>
+    </div>
+</header>
+
+    <div id="premiumLock" class="premium-lock" style="display:none;">
+        <h3>Premium Feature</h3>
+        <p>Auto Reply is available to Premium subscribers only. Upgrade your subscription to unlock it.</p>
+        <a href="subscription.html">View subscription plans</a>
+    </div>
+
+    <div id="autoReplyContent" style="display:none;">
+
+        <section class="auto-card">
+            <div class="auto-toggle-row">
+                <div>
+                    <h2>Auto Reply Status</h2>
+                    <p class="auto-description">Turn automatic replies on or off.</p>
+                    <strong id="autoStatus">OFF</strong>
+                </div>
+                <input type="checkbox" id="autoEnabled" class="auto-toggle">
+            </div>
+            <p class="auto-notice">Only private chats are supported. Group messages are ignored.</p>
+        </section>
+
+        <section class="auto-card">
+            <h2>Default Reply</h2>
+            <p class="auto-description">This message is sent when no keyword matches an incoming message.</p>
+
+            <label class="auto-label" for="defaultReply">Your automatic reply</label>
+            <textarea id="defaultReply" class="auto-input" maxlength="1000"
+                placeholder="Hello! Thanks for messaging us. We'll get back to you shortly."></textarea>
+
+            <button type="button" class="auto-button" id="saveAutoReply">Save Settings</button>
+        </section>
+
+        <section class="auto-card">
+            <h2>Keyword Replies</h2>
+            <p class="auto-description">Create special replies for messages containing specific keywords. Maximum 20 keywords.</p>
+
+            <label class="auto-label" for="keyword">Keyword</label>
+            <input id="keyword" class="auto-input" maxlength="50"
+                placeholder="e.g. price">
+
+            <label class="auto-label" for="keywordResponse">Reply for this keyword</label>
+            <textarea id="keywordResponse" class="auto-input" maxlength="1000"
+                placeholder="Our prices start from..."></textarea>
+
+            <button type="button" class="auto-button" id="addKeyword">Add Keyword</button>
+
+            <p class="auto-notice" id="keywordCount">0 / 20 keywords</p>
+            <div id="keywordList"></div>
+        </section>
+
+    </div>
+
+    <p id="autoMessage" class="auto-notice"></p>
+
+</main>
+
+<script src="script.js"></script>
+<script src="auto-reply.js"></script>
+</body>
+</html>
