@@ -17,7 +17,7 @@ const { loginUser } = require("./login");
 const { registerGoogleAuthRoutes } = require("./google-auth-routes");
 const whatsappModule = require("./whatsapp.js");
 const app = express();
-const PORT = Number(process.env.PORT || process.env.SERVER_PORT || 3000);
+const PORT = Number(process.env.SERVER_PORT || process.env.PORT || 3000);
 // Record an Owner administrative action
 function recordAdminAudit(adminUserId, action, targetUserId = null, details = null) {
     try {
