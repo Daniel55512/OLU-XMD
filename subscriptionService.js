@@ -3,6 +3,7 @@ const db = require("./database");
 // GET CUSTOMER SUBSCRIPTION STATUS
 function getSubscriptionStatus(userId) {
     const id = Number(userId);
+    const freeBetaMode = String(process.env.FREE_BETA_MODE || "").trim().toLowerCase() === "true";
 
     if (!Number.isSafeInteger(id) || id <= 0) {
         throw new Error("Invalid customer ID.");
@@ -30,7 +31,8 @@ function getSubscriptionStatus(userId) {
         return {
             hasSubscription: false,
             status: "not_started",
-            accessAllowed: false,
+            accessAllowed: freeBetaMode,
+            freeBeta: freeBetaMode,
             subscription: null
         };
     }
@@ -56,15 +58,18 @@ function getSubscriptionStatus(userId) {
         status = "scheduled";
     }
 
-    const accessAllowed =
+    const subscriptionAccessAllowed =
         status === "active" &&
         startTime <= now &&
         expiryTime > now;
+
+    const accessAllowed = freeBetaMode || subscriptionAccessAllowed;
 
     return {
         hasSubscription: true,
         status,
         accessAllowed,
+        freeBeta: freeBetaMode,
         subscription
     };
 }
