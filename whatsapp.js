@@ -244,68 +244,26 @@ sock.ev.on("connection.update", async (update) => {
 
         if (!connectionWelcomeSent && sock.user?.id) {
             connectionWelcomeSent = true;
-
             try {
                 const baileys = await loadBaileys();
                 const recipient = baileys.jidNormalizedUser(sock.user.id);
 
-                const metadata = await sock.newsletterMetadata(
-                    "invite",
-                    "0029VbAqiMi7YScvjZe81E3J"
-                );
-
-                if (!metadata?.id) {
-                    throw new Error("Official OLU-XMD Channel not found.");
-                }
-
-                const posts = await sock.newsletterFetchMessages(metadata.id, 5);
-                const post114 = posts.find(item => String(item.serverId) === "114");
-                const media = post114?.message?.imageMessage;
-
-                if (!media?.url || !media.caption) {
-                    throw new Error("Original Post 114 image or caption unavailable.");
-                }
-
-                const response = await fetch(media.url, {
-                    signal: AbortSignal.timeout(20000)
-                });
-
-                if (!response.ok) {
-                    throw new Error("Post 114 image download failed: HTTP " + response.status);
-                }
-
-                const imageBuffer = Buffer.from(await response.arrayBuffer());
-
-                if (!imageBuffer.length) {
-                    throw new Error("Post 114 image download was empty.");
-                }
-
-                if (
-                    activeSockets.get(id) !== sock ||
-                    socketGenerations.get(id) !== generation
-                ) {
+                if (activeSockets.get(id) !== sock || socketGenerations.get(id) !== generation) {
                     throw new Error("Connection changed before welcome delivery.");
                 }
 
                 await sock.sendMessage(recipient, {
-                    image: imageBuffer,
-                    caption: media.caption,
-                    contextInfo: {
-                        forwardingScore: 1,
-                        isForwarded: true,
-                        forwardedNewsletterMessageInfo: {
-                            newsletterJid: metadata.id,
-                            serverMessageId: 114,
-                            newsletterName: metadata.name || "OLU-XMD-BOT",
-                            contentType: 1
-                        }
-                    }
+                    text:
+                        "OLU-XMD CONNECTED SUCCESSFULLY\n\n" +
+                        "Your WhatsApp bot is online and ready to receive commands.\n\n" +
+                        "Send .menu to view available commands.\n\n" +
+                        "Powered by OLU-XMD"
                 });
 
-                console.log("OLU-XMD POST 114 CHANNEL WELCOME SENT:", userId);
+                console.log("OLU-XMD CONNECTION WELCOME SENT:", userId);
             } catch (error) {
                 connectionWelcomeSent = false;
-                console.error("OLU-XMD POST 114 WELCOME ERROR:", userId, error);
+                console.error("OLU-XMD CONNECTION WELCOME ERROR:", userId, error.message);
             }
         }
     }
