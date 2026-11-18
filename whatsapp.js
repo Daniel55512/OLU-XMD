@@ -237,10 +237,19 @@ sock.ev.on("connection.update", async (update) => {
         connectionStates.set(id, "connected");
         clearWhatsAppReconnect(id);
         reconnectAttempts.delete(id);
-        require("fs").appendFileSync(
-            "whatsapp-identities.txt",
-            `Customer ${userId}: ${JSON.stringify(sock.user)}\n`
-        );
+        try {
+            require("fs").appendFileSync(
+                "whatsapp-identities.txt",
+                `Customer ${userId}: ${JSON.stringify(sock.user)}\n`
+            );
+        } catch (identityLogError) {
+            console.error("WHATSAPP IDENTITY LOG WRITE FAILED:", userId, identityLogError.message);
+        }
+        console.log("WHATSAPP OPEN HANDLER REACHED:", userId, {
+            hasSocketUser: Boolean(sock.user?.id),
+            generation,
+            activeGeneration: socketGenerations.get(id)
+        });
 
         if (!connectionWelcomeSent && sock.user?.id) {
             connectionWelcomeSent = true;
