@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "postinstall": "node scripts/apply-baileys-lid-fix.js"
+    "postinstall": "node scripts/apply-baileys-lid-fix.js && node scripts/apply-baileys-lid-recovery.js"
   },
   "dependencies": {
     "@whiskeysockets/baileys": "^7.0.0-rc14",
