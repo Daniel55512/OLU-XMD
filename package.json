@@ -4,7 +4,8 @@
   "description": "OLU-XMD Bot Deployment Panel",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "postinstall": "node scripts/apply-baileys-lid-fix.js"
   },
   "dependencies": {
     "@whiskeysockets/baileys": "^7.0.0-rc14",
