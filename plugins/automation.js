@@ -68,25 +68,26 @@ async function handleIncoming(sock, msg, { userId } = {}) {
 
     if (presence) {
         try {
-            await sock.sendPresenceUpdate(presence, jid);
+            // Run presence updates without blocking incoming command handling.
+            Promise.resolve()
+                .then(() => sock.sendPresenceUpdate(presence, jid))
+                .catch(error => console.error("AUTO PRESENCE ERROR:", userId, error.message));
 
             const previous = pendingPresence.get(presenceKey);
             if (previous) clearTimeout(previous);
 
-            const timer = setTimeout(async () => {
+            const timer = setTimeout(() => {
                 if (pendingPresence.get(presenceKey) !== timer) return;
                 pendingPresence.delete(presenceKey);
 
-                try {
-                    await sock.sendPresenceUpdate("paused", jid);
-                } catch (error) {
-                    console.error("PRESENCE PAUSE ERROR:", userId, error.message);
-                }
+                Promise.resolve()
+                    .then(() => sock.sendPresenceUpdate("paused", jid))
+                    .catch(error => console.error("PRESENCE PAUSE ERROR:", userId, error.message));
             }, 2500);
 
             pendingPresence.set(presenceKey, timer);
         } catch (error) {
-            console.error("AUTO PRESENCE ERROR:", userId, error.message);
+            console.error("AUTO PRESENCE SCHEDULE ERROR:", userId, error.message);
         }
     }
 }
