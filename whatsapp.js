@@ -370,6 +370,47 @@ sock.ev.on("messages.delete", async (event) => {
 
 sock.ev.on("messages.upsert", async ({ messages, type }) => {
         console.log('MESSAGE UPSERT DIAGNOSTIC:', { userId, type, count: messages?.length || 0, account: sock.user?.id });
+        // Persistent, content-free WhatsApp event diagnostics
+        const diagnosticMessages = (messages || []).filter(item =>
+            item?.key?.remoteJid &&
+            item.key.remoteJid !== "status@broadcast"
+        );
+
+        if (
+            Number(userId) === 1 &&
+            (type === "notify" || diagnosticMessages.length > 0)
+        ) {
+            try {
+                fs.mkdirSync(path.join(__dirname, "diagnostics"), { recursive: true });
+                const diagnosticRecord = {
+                    loggedAt: new Date().toISOString(),
+                    userId,
+                    type,
+                    account: sock.user?.id || null,
+                    eventMessageCount: messages?.length || 0,
+                    messages: diagnosticMessages.map(item => ({
+                        remoteJid: item.key?.remoteJid || null,
+                        remoteJidAlt: item.key?.remoteJidAlt || null,
+                        fromMe: item.key?.fromMe ?? null,
+                        messageId: item.key?.id || null,
+                        messageTypes: Object.keys(item.message || {}),
+                        hasText: Boolean(
+                            item.message?.conversation ||
+                            item.message?.extendedTextMessage?.text
+                        ),
+                        messageStubType: item.messageStubType || null
+                    }))
+                };
+
+                fs.appendFileSync(
+                    path.join(__dirname, "diagnostics", "account1-events.jsonl"),
+                    JSON.stringify(diagnosticRecord) + "\n",
+                    "utf8"
+                );
+            } catch (diagnosticError) {
+                console.error("PERSISTENT MESSAGE DIAGNOSTIC ERROR:", diagnosticError.message);
+            }
+        }
 
         if (Number(userId) === 1) {
             for (const diagnosticMsg of messages || []) {
