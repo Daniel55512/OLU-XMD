@@ -1,6 +1,9 @@
 const fs = require("fs");
 const path = require("path");
 
+const processedPingMessages = new Map();
+const DEDUPE_TTL = 5 * 60 * 1000;
+
 function persistPingDiagnostic(userId, stage, details = {}) {
     if (Number(userId) !== 1) return;
 
@@ -8,17 +11,15 @@ function persistPingDiagnostic(userId, stage, details = {}) {
         const diagnosticDir = path.join(__dirname, "..", "diagnostics");
         fs.mkdirSync(diagnosticDir, { recursive: true });
 
-        const record = {
-            loggedAt: new Date().toISOString(),
-            event: "PING_PLUGIN",
-            stage,
-            userId,
-            ...details
-        };
-
         fs.appendFileSync(
             path.join(diagnosticDir, "account1-events.jsonl"),
-            JSON.stringify(record) + "\n",
+            JSON.stringify({
+                loggedAt: new Date().toISOString(),
+                event: "PING_PLUGIN",
+                stage,
+                userId,
+                ...details
+            }) + "\n",
             "utf8"
         );
     } catch (error) {
@@ -31,30 +32,54 @@ module.exports = {
     description: "Check bot response speed",
 
     async execute(sock, msg, { userId } = {}) {
-        const start = Date.now();
-        const jid = msg.key.remoteJid;
+        const jid = msg?.key?.remoteJid;
+        const messageId = msg?.key?.id;
+
+
+        const now = Date.now();
+
+        for (const [key, timestamp] of processedPingMessages) {
+            if (now - timestamp > DEDUPE_TTL) {
+                processedPingMessages.delete(key);
+            }
+        }
+
+        const dedupeKey = `${userId}:${jid}:${messageId}`;
+
+        if (messageId && processedPingMessages.has(dedupeKey)) {
+            persistPingDiagnostic(userId, "DUPLICATE_IGNORED", {
+                remoteJid: jid,
+                messageId
+            });
+            return;
+        }
+
+        if (messageId) {
+            processedPingMessages.set(dedupeKey, now);
+        }
 
         persistPingDiagnostic(userId, "START", {
             remoteJid: jid,
-            messageId: msg.key.id
+            messageId,
+            fromMe: false
         });
 
         console.log("PING SEND START:", {
+            userId,
             jid,
+            messageId,
             account: sock.user?.id
         });
 
         try {
             const result = await sock.sendMessage(jid, {
-                text: "Pong! Response: " + (Date.now() - start) + "ms"
+                text: "Pong! OLU-XMD is online."
             });
-
-            const elapsedMs = Date.now() - start;
 
             persistPingDiagnostic(userId, "SEND_SUCCESS", {
                 remoteJid: jid,
-                messageId: result?.key?.id,
-                elapsedMs
+                incomingMessageId: messageId,
+                outgoingMessageId: result?.key?.id
             });
 
             console.log("PING SEND SUCCESS:", {
@@ -64,6 +89,7 @@ module.exports = {
         } catch (error) {
             persistPingDiagnostic(userId, "SEND_FAILED", {
                 remoteJid: jid,
+                incomingMessageId: messageId,
                 error: error.message
             });
 

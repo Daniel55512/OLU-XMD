@@ -13,6 +13,29 @@ loadPlugins();
 
 const fs = require("fs");
 const db = require("./database");
+
+db.exec(`
+CREATE TABLE IF NOT EXISTS xmd_processed_command_messages (
+    user_id INTEGER NOT NULL,
+    remote_jid TEXT NOT NULL,
+    message_id TEXT NOT NULL,
+    processed_at INTEGER NOT NULL,
+    PRIMARY KEY (user_id, remote_jid, message_id)
+);
+`);
+
+const claimProcessedCommandMessage = db.prepare(`
+    INSERT OR IGNORE INTO xmd_processed_command_messages
+    (user_id, remote_jid, message_id, processed_at)
+    VALUES (?, ?, ?, ?)
+`);
+
+const purgeProcessedCommandMessages = db.prepare(`
+    DELETE FROM xmd_processed_command_messages
+    WHERE processed_at < ?
+`);
+
+let lastProcessedCommandCleanup = 0;
 const {
     hasActiveSubscription
 } = require("./subscriptionService");
@@ -261,11 +284,17 @@ sock.ev.on("connection.update", async (update) => {
                     throw new Error("Connection changed before welcome delivery.");
                 }
 
+                const welcomeImagePath = path.join(__dirname, "public", "images", "olu-xmd-logo.png");
+                const welcomeImage = fs.readFileSync(welcomeImagePath);
+
                 await sock.sendMessage(recipient, {
-                    text:
-                        "OLU-XMD CONNECTED SUCCESSFULLY\n\n" +
+                    image: welcomeImage,
+                    caption:
+                        "\u{1F389} OLU-XMD CONNECTED SUCCESSFULLY!\n\n" +
                         "Your WhatsApp bot is online and ready to receive commands.\n\n" +
-                        "Send .menu to view available commands.\n\n" +
+                        "Send *.menu* to view available commands.\n\n" +
+                        "\u{1F4E2} Join our official WhatsApp Channel for updates and announcements:\n" +
+                        "https://whatsapp.com/channel/0029VavRb0l77qVWvwcKyq1z\n\n" +
                         "Powered by OLU-XMD"
                 });
 
@@ -861,6 +890,37 @@ const validCommand = new RegExp(
 
 if (command.startsWith(prefix) && !validCommand.test(commandName)) {
     continue;
+}
+
+// GLOBAL COMMAND MESSAGE DEDUPLICATION
+if (command.startsWith(prefix) && msg?.key?.id && msg?.key?.remoteJid) {
+    const commandMessageId = String(msg.key.id);
+    const commandRemoteJid = String(msg.key.remoteJid);
+
+    const commandClaim = claimProcessedCommandMessage.run(
+        Number(userId),
+        commandRemoteJid,
+        commandMessageId,
+        Date.now()
+    );
+
+    if (commandClaim.changes === 0) {
+        console.log("DUPLICATE COMMAND MESSAGE SKIPPED:", {
+            userId,
+            command: commandName,
+            remoteJid: commandRemoteJid,
+            messageId: commandMessageId,
+            eventType: type
+        });
+        continue;
+    }
+
+    if (Date.now() - lastProcessedCommandCleanup > 60 * 60 * 1000) {
+        purgeProcessedCommandMessages.run(
+            Date.now() - 30 * 24 * 60 * 60 * 1000
+        );
+        lastProcessedCommandCleanup = Date.now();
+    }
 }
 
 // SUBSCRIPTION CHECK
