@@ -398,7 +398,10 @@ sock.ev.on("messages.upsert", async ({ messages, type }) => {
                             item.message?.conversation ||
                             item.message?.extendedTextMessage?.text
                         ),
-                        messageStubType: item.messageStubType || null
+                        messageStubType: item.messageStubType || null,
+                        messageStubError: Array.isArray(item.messageStubParameters)
+                            ? String(item.messageStubParameters[0] || "").slice(0, 180)
+                            : null
                     }))
                 };
 
